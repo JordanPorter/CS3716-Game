@@ -1,3 +1,6 @@
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.util.List;
 /**
  *
  *
@@ -5,7 +8,7 @@
 public class Board{
     String[][] tilePos;
     List<Player> players;
-    List<Country> countries;
+    //List<Country> countries;
 
     public void addPlayer(Player p, int row, int col){
         

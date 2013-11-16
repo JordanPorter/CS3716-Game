@@ -1,3 +1,4 @@
+import java.awt.Image;
 /**
  * Player class for game where the player has a set coordinates and stats
  * that determine the individule player. 
@@ -5,7 +6,7 @@
 public class Player{
     int row;
     int col;
-    Items[] inventory;
+    Object[] inventory;
     int money;
     int hp;
     int defense;
