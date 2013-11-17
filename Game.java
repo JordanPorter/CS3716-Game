@@ -9,7 +9,7 @@ public class Game extends JFrame {
 	
 	public Game(){
 		this.setLayout(new BorderLayout());
-		setSize(600,490);
+		setSize(750,700);
 		this.setTitle("Stuff");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
