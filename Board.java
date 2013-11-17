@@ -29,7 +29,7 @@ public class Board extends JPanel implements MouseListener{
         
         public Board(){
         		setLayout(new BorderLayout());
-                setSize(480,480);
+                setSize(numPixels*tilePos.length,numPixels*tilePos[1].length);
                 unit = new Unit(3,4,"Guy.png");
                 addMouseListener(this);
                 
@@ -60,9 +60,11 @@ public class Board extends JPanel implements MouseListener{
                 int x = event.getY();
                 x = x/this.numPixels; //using truncation of integers to get rowNum
                 y = y/this.numPixels; //likewise here.
-                if(Math.abs(x-unit.row) <= 1 && Math.abs(y-unit.col) <= 1){
+                if(x < tilePos.length && y <tilePos[1].length){
+                	if(Math.abs(x-unit.row) <= 1 && Math.abs(y-unit.col) <= 1){
                         unit.move(x, y);
                         repaint();
+                	}
                 }
         }
         public void mouseEntered(MouseEvent arg0) {}
