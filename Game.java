@@ -1,45 +1,26 @@
+import java.awt.BorderLayout;
 
-import javax.swing.JPanel;
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import java.awt.Dimension;
+import javax.swing.JPanel;
 
-/**
- * Game is the main class for our game. 
- *
- **/
-public class Game extends JPanel{
-    private Player curPlayer;
-    private Board board;
-    // starting window width and height
-    private static final int WINDOW_WIDTH = 500;
-    private static final int WINDOW_HEIGHT = 500;
-    // width and height to determine a change in the window 
-    private int width = -1;
-    private int height = -1;
-    
-    public Game(){
-        // PreferredSize of the frame
-        setPreferredSize( new Dimension( WINDOW_WIDTH, WINDOW_HEIGHT ));
-    }
-    
-    public Player getCurPlayer(){
-        return curPlayer;
-    }
 
-    // runApplication method to create a frame for the Game
-    public static void runApplication( JPanel app ){
-        // Create frame
-        JFrame frame = new JFrame();
-
-        frame.setSize(app.getPreferredSize());
-        frame.setTitle( app.getClass().getName() );
-        frame.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        frame.add(app);
-        frame.setVisible( true );
-    }
-    // Create a new game then add the game to RunApplication
-    public static void main( String[] args){
-        Game application = new Game();
-        runApplication( application );
-    }
+public class Game extends JFrame {
+	
+	public Game(){
+		this.setLayout(new BorderLayout());
+		setSize(600,490);
+		this.setTitle("Stuff");
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setResizable(false);
+		this.add(new Board(), BorderLayout.CENTER);
+		JPanel gamePanel = new JPanel();
+		gamePanel.add(new JButton("JoinGame"));
+		this.add(gamePanel, BorderLayout.EAST);
+		this.setVisible(true);
+	}
+	public static void main(String[] args){
+		new Game();
+		
+	}
 }
