@@ -56,8 +56,10 @@ public class Board extends JPanel implements MouseListener{
 		int x = event.getY();
 		x = x/this.numPixels; //using truncation of integers to get rowNum
 		y = y/this.numPixels; //likewise here.
-		unit.move(x, y);
-		repaint();
+		if(Math.abs(x-unit.row) <= 1 && Math.abs(y-unit.col) <= 1){
+			unit.move(x, y);
+			repaint();
+		}
 	}
 	public void mouseEntered(MouseEvent arg0) {}
 	public void mouseExited(MouseEvent arg0) {	}
