@@ -9,10 +9,10 @@ public class Game extends JFrame {
 	
 	public Game(){
 		this.setLayout(new BorderLayout());
-		setSize(750,490);
+		setSize(400,400);
 		this.setTitle("Stuff");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setResizable(false);
+		//this.setResizable(false);
 		this.add(new Board(), BorderLayout.CENTER);
 		JPanel gamePanel = new JPanel();
 		gamePanel.add(new JButton("JoinGame"));
