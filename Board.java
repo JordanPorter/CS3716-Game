@@ -62,8 +62,10 @@ public class Board extends JPanel implements MouseListener{
                 y = y/this.numPixels; //likewise here.
                 if(x < tilePos.length && y <tilePos[1].length){
                 	if(Math.abs(x-unit.row) <= 1 && Math.abs(y-unit.col) <= 1){
-                        unit.move(x, y);
-                        repaint();
+                		if(!tilePos[x][y].equals("W") && !tilePos[x][y].equals("M")){
+                			unit.move(x, y);
+                			repaint();
+                		}
                 	}
                 }
         }
