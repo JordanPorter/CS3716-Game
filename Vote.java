@@ -1,4 +1,3 @@
-import javax.swing.JOptionPane;
 
 
 /**
@@ -10,7 +9,6 @@ import javax.swing.JOptionPane;
  */
 public interface Vote {
 	
-	public boolean vote();
-	public JOptionPane voteWindow();
-	
+	public Candidate electionVote();
+	public boolean yay_nayVote();
 }
