@@ -28,7 +28,7 @@ public class Game extends JFrame implements ActionListener{
     
 	public Game(){
 		this.setLayout(new BorderLayout());
-		setSize(750,490);
+		setSize(610,510);
 		this.setTitle("CS3716 Project G5");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setResizable(false);
