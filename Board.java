@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Board extends JPanel implements MouseListener{
         int numPixels =60; //number of pixels in tile image - must be a square. (not the map just the tile)
@@ -22,15 +23,32 @@ public class Board extends JPanel implements MouseListener{
                                          {"D","D","D","W","W","W","W","W","W","F"},
                                          {"D","D","D","D","W","W","W","W","W","W"},
                                          };
-        //ArrayList<Unit> units; will do this later
-        Unit unit;
+       //Unit[] units;
+       //int emptySlot = 0;
+       //int maxSlots = 4;
+      ArrayList<Unit> units; //will do this later
+      //  LinkedList units;
+       Unit unit;
+       Unit unit1;
+       //Unit unit2;
         
         //Tile[][] tiles = new Tile[8][8]; Not required, We should create a map where key{I,F,G,M,D,W) and value{attributes of I, ...} near array efficiency at a fraction of memory cost.
         
         public Board(){
         		setLayout(new BorderLayout());
                 setSize(numPixels*tilePos.length,numPixels*tilePos[1].length);
-                unit = new Unit(3,4,"Guy.png");
+                //units = new Unit[maxSlots];
+                units = new ArrayList<Unit>();
+                //units = new LinkedList<Unit>();
+                unit1 = new Unit(3,4,"Guy.png");
+                //unit2 = new Unit(7,3, "Guy.png");
+                //units[emptySlot] = unit;
+                //emptySlot++;
+                //units[emptySlot] = unit2;
+                //emptySlot++;
+                units.add(unit1);
+                //units.add(unit2);
+                unit = unit1;
                 addMouseListener(this);
                 
                 //initTiles();
@@ -47,11 +65,20 @@ public class Board extends JPanel implements MouseListener{
                 //super.paint(g);
                 Graphics2D g2d = (Graphics2D) g;
                 for(int i=0; i<tilePos.length; i++){
+                		//g2d.drawLine(i*this.numPixels, 0, i*this.numPixels, tilePos[1].length*this.numPixels);
+                		//g2d.drawLine(0, i*this.numPixels, tilePos[1].length*this.numPixels, i*this.numPixels);
+                		//g2d.drawLine(i*this.numPixels, 0, tilePos[1].length*this.numPixels, i*this.numPixels);
                         for(int j=0; j<tilePos[i].length; j++){
                                 g2d.drawImage(new Tile(tilePos[i][j]).getImage(), j*this.numPixels,i*this.numPixels,this);
+                               // g2d.drawLine(arg0, arg1, arg2, arg3)
                         }
                 }
-                g2d.drawImage(unit.getImage(), unit.getCol()*this.numPixels + 10, unit.getRow()*this.numPixels + 10, this);
+                //for(int i =0; i<tilePos[i].length; i++){
+                //	g2d.drawLine(0, i*this.numPixels, tilePos[1].length*this.numPixels, i*this.numPixels);
+                //}
+                for(Unit u : units){
+                	  g2d.drawImage(u.getImage(), u.getCol()*this.numPixels + 10, u.getRow()*this.numPixels + 10, this);
+                }
                 g.dispose();
         }
         
@@ -73,18 +100,4 @@ public class Board extends JPanel implements MouseListener{
         public void mouseExited(MouseEvent arg0) {        }
         public void mousePressed(MouseEvent arg0) {}
         public void mouseReleased(MouseEvent arg0) {}
-        
-        //JButton joinButton = new JButton("JoinGame");
-        //add(new JButton("JoinGame"));
-        
-       /* public static void main (String[] args){
-            JFrame frame = new JFrame();
-            frame.setSize(480,550);
-            frame.setTitle("Stuff");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setResizable(false);
-            frame.add(new Board());
-            //frame.add(new JButton("JoinGame"));
-            frame.setVisible(true);
-    }*/
 }
