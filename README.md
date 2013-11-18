@@ -34,5 +34,8 @@ And run command:
 
 $java Game
 
+or Alternatively, The jar file can be run directly by the following command:
+
+$java -jar CS3716-Game.jar 
 
 
