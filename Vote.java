@@ -9,7 +9,7 @@ import javax.swing.JOptionPane;
  *
  */
 public interface Vote {
-
+	
 	public boolean vote();
 	public JOptionPane voteWindow();
 	

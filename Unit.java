@@ -37,23 +37,8 @@ public class Unit {
 	public Image getImage()	{
 		return this.image;
 	}
-		
-	/**
-	 * The vote method accepts a "yay" or "nay"
-	 * vote and outputs a true for "yay" and 
-	 * false for "nay"
-	 * 
-	 * @return true if "yay", false if "nay"
-	 */
-	public boolean vote()	{
-		String thisVote = JOptionPane.showInputDialog("type 'yay' or 'nay' in the box and press 'vote'", null);
-		while(true)	{
-			if(thisVote.equalsIgnoreCase("yay"))
-				return true;
-			else if(thisVote.equalsIgnoreCase("nay"))
-				return false;
-			else
-				thisVote = JOptionPane.showInputDialog("type 'yay' or 'nay' in the box and press 'vote'", null);
-		}
+	
+	public String vote(String message)	{
+		return JOptionPane.showInputDialog(message);
 	}
 }
