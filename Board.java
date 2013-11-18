@@ -40,7 +40,7 @@ public class Board extends JPanel implements MouseListener{
                 //units = new Unit[maxSlots];
                 units = new ArrayList<Unit>();
                 //units = new LinkedList<Unit>();
-                unit1 = new Unit(3,4,"Guy.png");
+                unit1 = new Unit(3,4,"./img/Guy.png");
                 //unit2 = new Unit(7,3, "Guy.png");
                 //units[emptySlot] = unit;
                 //emptySlot++;

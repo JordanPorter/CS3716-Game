@@ -10,7 +10,7 @@ public class Tile {
 	
 	public Tile(String type){
 		this.type = type;
-		imageUrl = type + imageUrl; //concatenates ie. GTile.png, WTile.png, etc.
+		imageUrl = "/img/" + type + imageUrl; //concatenates ie. GTile.png, WTile.png, etc.
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(imageUrl)); 
 		this.image = ii.getImage();
 	}

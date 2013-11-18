@@ -17,7 +17,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class Game extends JFrame implements ActionListener{
-    private ImageIcon title = new ImageIcon("Title.png");
+    private ImageIcon title = new ImageIcon("./img/Title.png");
     private JPanel main;
     private Board board;
     private JLabel titlescreen;
