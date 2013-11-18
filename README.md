@@ -14,7 +14,7 @@ In the first iteration of the Game, four classes were created
 
 Board class creates the panel where the whole game is to be played.
 
-Tile class creates the terrain for the board and we have used 7 different tiles. 
+Tile class creates the terrain for the board and we have used 7 different tiles. The player can only go over some of the tiles. Some tiles such as MTile (mountain) and WTile (water) are not meant to be passed through them. 
 //GTile - grass, HTile - hills, MTile - mountains, FTile - forest, WTile - water, ITile - Ice, etc.
 This image files will be used at the time of running the code. 
 
@@ -28,7 +28,11 @@ The code can be compiled by:
 
 $ javac Board.java Tile.java Unit.java Game.java
 
+Please ensure that the .class files are in the same folder as the source files to avoid bugs in executing the next command. 
+
 And run command: 
 
 $java Game
+
+
 
