@@ -12,6 +12,7 @@ public class Unit {
 	int col; //current tile col
 	private Image image;
 	Happiness hap;
+	String playerName;
 	//private String unitPicUrl; //= "unit.png"
 
 	public Unit(int row, int col, String unitPicUrl){
@@ -21,6 +22,9 @@ public class Unit {
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(unitPicUrl));
 		image = ii.getImage();
 		setHappiness();
+	}
+	
+	public Unit()	{
 	}
 	
 	public int getRow()	{

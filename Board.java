@@ -1,16 +1,13 @@
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.LinkedList;
+
+import javax.swing.JPanel;
+
+@SuppressWarnings("serial")
 
 public class Board extends JPanel implements MouseListener{
     int numPixels =60; //number of pixels in tile image - must be a square. (not the map just the tile)

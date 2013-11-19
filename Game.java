@@ -1,20 +1,17 @@
-import java.awt.event.ActionListener;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
-import java.awt.BorderLayout;
-import java.awt.CardLayout;
-
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
-import java.awt.Image;
-import javax.swing.ImageIcon;
+@SuppressWarnings("serial")
 
 public class Game extends JFrame implements ActionListener{
     private ImageIcon title = new ImageIcon("./img/Title.png");
