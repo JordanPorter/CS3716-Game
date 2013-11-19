@@ -12,6 +12,14 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+/**
+* @author Allan Collins
+*
+* The Board class draws the board for the game
+* It implements a movement system that uses the Unit move method to change 
+* the unit's position and then redraws it on the board.
+*/
+
 public class Board extends JPanel implements MouseListener{
         int numPixels =60; //number of pixels in tile image - must be a square. (not the map just the tile)
         String[][] tilePos = {			{"I","I","I","I","I","F","F","F","F","F"},
