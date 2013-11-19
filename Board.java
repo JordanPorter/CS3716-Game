@@ -22,8 +22,7 @@ public class Board extends JPanel implements MouseListener{
                                          {"D","D","W","W","W","W","G","G","F","F"},
                                          {"D","D","D","W","W","W","W","W","W","F"},
                                          {"D","D","D","D","W","W","W","W","W","W"},
-                                         };
-  
+       
       LinkedList<Unit> units;
        Unit unit;
        Unit unit1;
@@ -45,19 +44,24 @@ public class Board extends JPanel implements MouseListener{
                 regions.add(region2);
                 unit2 = new Unit(7,3, "Guy.png");
                 units.add(unit1);
-                units.add(unit2);
+                units.addFirst(unit2);
                 unit = unit1;
                 addMouseListener(this);
                 
         }
         
+        
         public void paintComponent(Graphics g){
+                
                 Graphics2D g2d = (Graphics2D) g;
                 for(int i=0; i<tilePos.length; i++){
+                		
                         for(int j=0; j<tilePos[i].length; j++){
                                 g2d.drawImage(new Tile(tilePos[i][j]).getImage(), j*this.numPixels,i*this.numPixels,this);
+                              
                         }
                 }
+                
                 for(Unit u : units){
                 	  g2d.drawImage(u.getImage(), u.getCol()*this.numPixels + 10, u.getRow()*this.numPixels + 10, this);
                 }
@@ -85,4 +89,5 @@ public class Board extends JPanel implements MouseListener{
         public void mouseExited(MouseEvent arg0) {        }
         public void mousePressed(MouseEvent arg0) {}
         public void mouseReleased(MouseEvent arg0) {}
+        
 }
