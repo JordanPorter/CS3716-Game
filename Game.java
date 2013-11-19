@@ -1,28 +1,29 @@
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-import javax.swing.ImageIcon;
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 
-@SuppressWarnings("serial")
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Game extends JFrame implements ActionListener{
-    private ImageIcon title = new ImageIcon("./img/Title.png");
+    private ImageIcon title = new ImageIcon("Title.png");
     private JPanel main;
     private Board board;
     private JLabel titlescreen;
     private JPanel tScreen;
 
     private JMenuBar menu;
-    private JMenu actions;
-    private JMenuItem createCountry;
     private JMenu file;
     private JMenuItem newGame;
     private JMenuItem joinGame;
@@ -34,49 +35,37 @@ public class Game extends JFrame implements ActionListener{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         
-        final Region region1 = new Region("Region 1", 0, 0, 10, 10);
-        
         menu = new JMenuBar();
         file = new JMenu("File");
         file.setMnemonic(KeyEvent.VK_F);
-        actions = new JMenu("Actions");
-        actions.setMnemonic(KeyEvent.VK_A);
-        
-        createCountry = new JMenuItem("Create Country");
-        createCountry.addActionListener(new ActionListener()	{
-        	public void actionPerformed(ActionEvent e)	{
-        		boolean yes = region1.yay_nayVote();
-        		System.out.println(yes);
-        	}
-        });
-        actions.add(createCountry);
         
         newGame = new JMenuItem("New Game");
         newGame.addActionListener( new ActionListener (){
             public void actionPerformed(ActionEvent e){
-            	board = new Board();
-            	region1.citizens.add(board.unit);
-            	main.removeAll();
-            	main.add(board);
-            	repaint();
+                CardLayout c = (CardLayout)(main.getLayout());
+                c.show(main, "GAME");
             }
         });
         joinGame = new JMenuItem("Join Game");
         menu.add(file);
         file.add(newGame);
         file.add(joinGame);
-        menu.add(actions);
-        
         this.add(menu, BorderLayout.NORTH);
                 
         titlescreen = new JLabel(title);
         tScreen = new JPanel();
         tScreen.add(titlescreen);
-        
-        main = new JPanel();
-        main.add(tScreen);
-        
+
+        board = new Board();
+
+        main = new JPanel(new CardLayout());
+        main.add(tScreen, "TITLE");
+        main.add(board, "GAME");
+
         this.add(main, BorderLayout.CENTER);
+        //this.add(board, BorderLayout.CENTER);
+        //gamePanel.add(new JButton("JoinGame"));
+        //this.add(gamePanel, BorderLayout.EAST);
         this.setVisible(true);
     }
 
