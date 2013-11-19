@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 
 
 /**
@@ -9,6 +11,6 @@
  */
 public interface Vote {
 	
-	public Candidate electionVote();
+	public Candidate electionVote(LinkedList<Unit> candidates);
 	public boolean yay_nayVote();
 }

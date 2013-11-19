@@ -66,8 +66,4 @@ public class Unit {
 				break;
 		}
 	}
-	
-	public String vote(String message)	{
-		return JOptionPane.showInputDialog(message);
-	}
 }
