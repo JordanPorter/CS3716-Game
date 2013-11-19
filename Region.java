@@ -20,11 +20,14 @@ public class Region {
 		this.LRrow = LRrow;
 		this.LRcol = LRcol;
 		this.gov = gov.NONE;
+		citizens = new LinkedList<Unit>();
 	}
 	
 	public void setRuler(Unit unit){this.ruler = unit;	}
 	public Unit getRuler(){return this.ruler;}
 	public void setName(String name){this.name = name;}
 	public String getName(){return this.name;}
+	public void addCitizen(Unit unit){this.citizens.add(unit);}
+	public LinkedList<Unit> getCitizens(){return this.citizens;}//maybe returning an iterator would be better here.
 	
 }
