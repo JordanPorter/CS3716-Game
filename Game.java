@@ -1,23 +1,18 @@
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
 import java.awt.BorderLayout;
-import java.awt.CardLayout;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-
-import java.awt.Image;
 import javax.swing.ImageIcon;
 
+@SuppressWarnings("serial")
 public class Game extends JFrame implements ActionListener{
-    private ImageIcon title = new ImageIcon("Title.png");
+    private ImageIcon title = new ImageIcon("./img/TITLE.png");
     private JPanel main;
     private Board board;
     private JLabel titlescreen;
@@ -42,8 +37,10 @@ public class Game extends JFrame implements ActionListener{
         newGame = new JMenuItem("New Game");
         newGame.addActionListener( new ActionListener (){
             public void actionPerformed(ActionEvent e){
-                CardLayout c = (CardLayout)(main.getLayout());
-                c.show(main, "GAME");
+            	board = new Board();
+            	main.removeAll();
+            	main.add(board);
+            	repaint();
             }
         });
         joinGame = new JMenuItem("Join Game");
@@ -56,16 +53,11 @@ public class Game extends JFrame implements ActionListener{
         tScreen = new JPanel();
         tScreen.add(titlescreen);
 
-        board = new Board();
 
-        main = new JPanel(new CardLayout());
-        main.add(tScreen, "TITLE");
-        main.add(board, "GAME");
+        main = new JPanel();
+        main.add(tScreen);
 
         this.add(main, BorderLayout.CENTER);
-        //this.add(board, BorderLayout.CENTER);
-        //gamePanel.add(new JButton("JoinGame"));
-        //this.add(gamePanel, BorderLayout.EAST);
         this.setVisible(true);
     }
 
