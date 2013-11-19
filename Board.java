@@ -23,10 +23,7 @@ public class Board extends JPanel implements MouseListener{
                                          {"D","D","D","W","W","W","W","W","W","F"},
                                          {"D","D","D","D","W","W","W","W","W","W"},
                                          };
-       //Unit[] units;
-       //int emptySlot = 0;
-       //int maxSlots = 4;
-      //ArrayList<Unit> units; //will do this later
+  
       LinkedList<Unit> units;
        Unit unit;
        Unit unit1;
@@ -35,13 +32,10 @@ public class Board extends JPanel implements MouseListener{
        Region region1;
        Region region2;
         
-        //Tile[][] tiles = new Tile[8][8]; Not required, We should create a map where key{I,F,G,M,D,W) and value{attributes of I, ...} near array efficiency at a fraction of memory cost.
         
         public Board(){
         		setLayout(new BorderLayout());
                 setSize(numPixels*tilePos.length,numPixels*tilePos[1].length);
-                //units = new Unit[maxSlots];
-                //units = new ArrayList<Unit>();
                 regions = new ArrayList<Region>();
                 units = new LinkedList<Unit>();
                 unit1 = new Unit(3,4,"Guy.png");
@@ -50,40 +44,20 @@ public class Board extends JPanel implements MouseListener{
                 regions.add(region1);
                 regions.add(region2);
                 unit2 = new Unit(7,3, "Guy.png");
-                //units[emptySlot] = unit;
-                //emptySlot++;
-                //units[emptySlot] = unit2;
-                //emptySlot++;
                 units.add(unit1);
                 units.add(unit2);
                 unit = unit1;
                 addMouseListener(this);
                 
-                //initTiles();
         }
-        //public void initTiles(){
-        //        for(int i=0; i<tilePos.length;i++){
-        //                for(int j=0; j<tilePos[i].length; j++){
-        //                        tiles[i][j] = new Tile(tilePos[i][j]);
-        //                }
-        //        }
-        //}
         
         public void paintComponent(Graphics g){
-                //super.paint(g);
                 Graphics2D g2d = (Graphics2D) g;
                 for(int i=0; i<tilePos.length; i++){
-                		//g2d.drawLine(i*this.numPixels, 0, i*this.numPixels, tilePos[1].length*this.numPixels);
-                		//g2d.drawLine(0, i*this.numPixels, tilePos[1].length*this.numPixels, i*this.numPixels);
-                		//g2d.drawLine(i*this.numPixels, 0, tilePos[1].length*this.numPixels, i*this.numPixels);
                         for(int j=0; j<tilePos[i].length; j++){
                                 g2d.drawImage(new Tile(tilePos[i][j]).getImage(), j*this.numPixels,i*this.numPixels,this);
-                               // g2d.drawLine(arg0, arg1, arg2, arg3)
                         }
                 }
-                //for(int i =0; i<tilePos[i].length; i++){
-                //	g2d.drawLine(0, i*this.numPixels, tilePos[1].length*this.numPixels, i*this.numPixels);
-                //}
                 for(Unit u : units){
                 	  g2d.drawImage(u.getImage(), u.getCol()*this.numPixels + 10, u.getRow()*this.numPixels + 10, this);
                 }
