@@ -53,6 +53,21 @@ public class Region implements Vote{
 		return this.citizens;
 	}//maybe returning an iterator would be better here.
 
+	public void trackCitizens(LinkedList<Unit> units)	{
+		for(Unit u : units)	{
+			if(u.getX() >= this.x*60 && u.getX() < (this.x+length)*60)	{
+				if(u.getY() >= this.y*60 && u.getY() < (this.y+length)*60)	{
+					citizens.add(u);
+					System.out.println(this.name + " ADDED " + u.playerName);
+				}
+				else
+					citizens.remove(u);
+			}
+			else
+				citizens.remove(u);
+		}
+	}
+	
 	@Override
 	public Candidate electionVote(LinkedList<Unit> electionCandidates) {
 		LinkedList<Candidate> candidates = new LinkedList<Candidate>();

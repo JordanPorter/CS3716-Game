@@ -97,6 +97,8 @@ public class Board extends JPanel implements MouseListener{
         	}
         }
         for(Region r : regions)	{
+        	
+        	r.trackCitizens(units);
         	g.setColor(r.color);
         	g.drawRect(r.x*60, r.y*60, r.x + r.length*60-1, r.y + r.width*60-1);
         	g.setColor(Color.WHITE);
@@ -150,6 +152,7 @@ public class Board extends JPanel implements MouseListener{
 	            	repaint();
 	           	}
 	        }
+	        
     	}
     	catch(Exception e)	{
     		System.out.println("No Active Player");

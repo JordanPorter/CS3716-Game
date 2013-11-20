@@ -15,10 +15,11 @@ import javax.swing.JPanel;
 public class Unit {
 	int row; //current tile row
 	int col; //current tile col
+	int x;
+	int y;
 	private Image image;
 	Happiness hap;
 	String playerName;
-	//private String unitPicUrl; //= "unit.png"
 
 	public Unit(int row, int col, String unitPicUrl, String playerName){
 		this.row = row;
@@ -38,6 +39,14 @@ public class Unit {
 	
 	public int getCol()	{
 		return this.col;
+	}
+	
+	public int getX()	{
+		return col*60;
+	}
+	
+	public int getY()	{
+		return row*60;
 	}
 	
 	public void move(int row,int col)	{
