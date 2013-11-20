@@ -21,7 +21,7 @@ public class Game extends JFrame implements ActionListener{
 
     static Game g;
     
-    private JMenuBar menu;
+    public JMenuBar menu;
     public JMenu file;
     public JMenuItem newGame;
     public JMenuItem joinGame;

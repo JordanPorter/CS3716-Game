@@ -13,6 +13,7 @@ public class Region implements Vote{
 	Color color;
 	enum govt{DEMOCRACY,DICTATORSHIP,NONE}
 	govt gov;
+	boolean isCountry = false;
 	String name; //we should set an initial Region name - like hard code it ourselves, but maybe let the governor or dictator be able to change it when they start a country. or win a quo
 	LinkedList<Unit> citizens; //people belonging to a country
 	LinkedList<Unit> candidates; //people running in election
@@ -55,10 +56,10 @@ public class Region implements Vote{
 
 	public void trackCitizens(LinkedList<Unit> units)	{
 		for(Unit u : units)	{
-			if(u.getX() >= this.x*60 && u.getX() < (this.x+length)*60)	{
-				if(u.getY() >= this.y*60 && u.getY() < (this.y+length)*60)	{
-					citizens.add(u);
-					System.out.println(this.name + " ADDED " + u.playerName);
+			if(u.getX() >= this.x*60 && u.getX() <= (this.x+length-1)*60)	{
+				if(u.getY() >= this.y*60 && u.getY() <= (this.y+length-2)*60)	{
+					if(!citizens.contains(u))	
+						citizens.add(u);
 				}
 				else
 					citizens.remove(u);
@@ -100,7 +101,8 @@ public class Region implements Vote{
 		LinkedList<Unit> yayVotes = new LinkedList<Unit>();
 		LinkedList<Unit> nayVotes = new LinkedList<Unit>();
 		for(Unit u : citizens)	{
-			String thisVote = (String) JOptionPane.showInputDialog(null, "Enter your vote (yay/nay/don't care):", JOptionPane.PLAIN_MESSAGE);
+			System.out.println(u.playerName);
+			String thisVote = (String) JOptionPane.showInputDialog(null, u.playerName + " enter your vote (yay/nay/don't care):", JOptionPane.PLAIN_MESSAGE);
 			if(thisVote.equalsIgnoreCase("yay"))
 				yayVotes.add(u);
 			else if(thisVote.equalsIgnoreCase("nay"))

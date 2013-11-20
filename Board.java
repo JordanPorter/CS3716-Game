@@ -8,6 +8,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.LinkedList;
 
+import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -41,10 +43,16 @@ public class Board extends JPanel implements MouseListener{
     LinkedList<Unit> units;
     LinkedList<Region> regions;
     
+    JMenu actions;
+    
+    JMenuItem createCountry;
     JMenuItem addPlayer;
     JMenuItem exitGame;
     
+    Game g;
+    
     public Board(Game g){
+    	this.g = g;
     	setLayout(new BorderLayout());
     	g.setSize(numPixels*tilePos[0].length,numPixels*tilePos.length+45);
         regions = new LinkedList<Region>();
@@ -54,6 +62,25 @@ public class Board extends JPanel implements MouseListener{
         regions.add(new Region("Joshland", 0, tilePos.length/2, tilePos[0].length/2, tilePos.length/2, Color.GREEN));
         regions.add(new Region("Nishantland", tilePos[0].length/2, tilePos.length/2, tilePos[0].length/2, tilePos.length/2, Color.RED));
         addMouseListener(this);   
+        
+        actions = new JMenu("Actions");
+        
+        createCountry = new JMenuItem("Create Country");
+        createCountry.addActionListener(new ActionListener()	{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				for(Region r : regions)	{
+					if(r.citizens.contains(activeUnit))	{
+						System.out.println("Taking Vote for Region: " + r.name + " With " + r.citizens.size() + " citizens");
+						r.isCountry = r.yay_nayVote();
+						System.out.println(r.name + " is Country: " + r.isCountry);
+					}
+				}
+			}
+        	
+        });
+        actions.add(createCountry);
         
         addPlayer = new JMenuItem("Add Player");
         addPlayer.addActionListener(new ActionListener()	{
@@ -83,6 +110,7 @@ public class Board extends JPanel implements MouseListener{
         
         g.file.add(addPlayer);
         g.file.add(exitGame);
+        g.menu.add(actions);
         g.file.remove(g.newGame);
         g.file.remove(g.joinGame);
         
@@ -101,19 +129,30 @@ public class Board extends JPanel implements MouseListener{
         	r.trackCitizens(units);
         	g.setColor(r.color);
         	g.drawRect(r.x*60, r.y*60, r.x + r.length*60-1, r.y + r.width*60-1);
+        	if(r.isCountry)	{
+        		g.setColor(Color.GRAY);
+        		g.fillRect(r.x*60 + r.length/2*60 - 3, r.y*60 + r.width/2*60 - 15, r.name.length()*8, 15);
+        	}
         	g.setColor(Color.WHITE);
         	g.drawString(r.name, r.x*60 + r.length/2*60, r.y*60 + r.width/2*60);
+
         }
                 
         for(Unit u : units){
         	g.setColor(Color.WHITE);
-        	g2d.drawString(u.playerName, u.getCol()*this.numPixels + 9, u.getRow()*this.numPixels + 10);
+        	g2d.drawString(u.playerName, u.getCol()*this.numPixels + 10, u.getRow()*this.numPixels + 11);
         	g2d.drawImage(u.getImage(), u.getCol()*this.numPixels + 10, u.getRow()*this.numPixels + 10, this);
+        	if(u.equals(activeUnit))	{
+        		g.setColor(Color.RED);
+        		g2d.drawRect(u.getCol()*this.numPixels+5 , u.getRow()*this.numPixels, u.playerName.length()*8, 15);
+        	}
         }
         g.dispose();
     }
         
-    public void mouseClicked(MouseEvent event){}
+    public void mouseClicked(MouseEvent event){
+    	
+    }
     
     public void mouseEntered(MouseEvent arg0) {}
     
@@ -128,6 +167,7 @@ public class Board extends JPanel implements MouseListener{
 	        for(Unit u : units)	{
 	        	if(u.getRow() == x && u.getCol() == y){
 	        		activeUnit = u;
+	        		repaint();
 	        		break;
 	        	}
 	        	else	{
@@ -158,5 +198,4 @@ public class Board extends JPanel implements MouseListener{
     		System.out.println("No Active Player");
     	}
     }
-
 }

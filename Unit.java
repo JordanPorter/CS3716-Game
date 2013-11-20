@@ -1,5 +1,7 @@
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.text.NumberFormat;
 
 import javax.swing.ImageIcon;
