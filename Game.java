@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 @SuppressWarnings("serial")
 public class Game extends JFrame implements ActionListener{
     private ImageIcon title = new ImageIcon("./img/TITLE.png");
-    private JPanel main;
+    public JPanel mainPanel;
     private Board board;
     private JLabel titlescreen;
     private JPanel tScreen;
@@ -40,8 +40,8 @@ public class Game extends JFrame implements ActionListener{
         newGame.addActionListener( new ActionListener (){
             public void actionPerformed(ActionEvent e){
             	board = new Board(g);
-            	main.removeAll();
-            	main.add(board);
+            	g.remove(mainPanel);
+            	g.add(board, BorderLayout.CENTER);
             	repaint();
             }
         });
@@ -56,10 +56,11 @@ public class Game extends JFrame implements ActionListener{
         tScreen.add(titlescreen);
 
 
-        main = new JPanel();
-        main.add(tScreen);
+        mainPanel = new JPanel();
+        mainPanel.add(tScreen);
 
-        this.add(main, BorderLayout.CENTER);
+        this.add(mainPanel, BorderLayout.CENTER);
+        this.pack();
         this.setVisible(true);
     }
 
@@ -67,7 +68,6 @@ public class Game extends JFrame implements ActionListener{
         Object o = evt.getSource();
     }
     public static void main(String[] args){
-        g = new Game();
-                
+        g = new Game();         
     }
 }

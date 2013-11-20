@@ -22,14 +22,18 @@ import javax.swing.JPanel;
 */
 public class Board extends JPanel implements MouseListener{
     int numPixels = 60; //number of pixels in tile image - must be a square. (not the map just the tile)
-    String[][] tilePos = {			{"I","I","I","I","I","F","F","F","F","F"},
-                                    {"M","I","I","I","I","I","G","M","M","M"},
-                                    {"M","M","H","H","H","G","G","G","G","G"},
-                                    {"M","M","G","G","G","G","G","G","G","G"},
-                                    {"G","G","G","G","G","G","G","G","G","F"},
-                                    {"D","D","W","W","W","W","G","G","F","F"},
-                                    {"D","D","D","W","W","W","W","W","W","F"},
-                                    {"D","D","D","D","W","W","W","W","W","W"},
+    String[][] tilePos = {			{"F","F","F","F","F","F","F","F","F","F","F","F","F","F"},
+                                    {"M","F","F","F","F","G","G","F","F","F","F","F","F","F"},
+                                    {"M","M","F","F","G","G","G","G","G","F","F","F","F","F"},
+                                    {"M","M","G","G","G","G","G","G","G","G","F","F","F","F"},
+                                    {"G","G","G","G","G","G","G","G","G","G","G","F","F","F"},
+                                    {"D","D","W","W","W","W","G","G","G","G","G","G","F","F"},
+                                    {"D","D","D","W","W","W","W","W","W","W","G","G","G","F"},
+                                    {"D","D","D","D","W","W","W","W","W","W","W","G","G","G"},
+                                    {"D","D","D","W","W","W","G","G","W","W","W","G","G","G"},
+                                    {"D","D","W","W","W","W","W","W","W","W","W","G","G","G"},
+                                    {"D","D","D","D","W","W","W","W","W","W","G","G","G","G"},
+                                    {"D","D","D","D","D","D","D","G","G","G","G","G","G","G"},
     };
     
     Unit activeUnit = null;
@@ -43,7 +47,7 @@ public class Board extends JPanel implements MouseListener{
     
     public Board(Game g){
     	setLayout(new BorderLayout());
-        setSize(numPixels*tilePos.length,numPixels*tilePos[1].length);
+    	g.setSize(numPixels*tilePos[0].length,numPixels*tilePos.length+45);
         regions = new ArrayList<Region>();
         units = new LinkedList<Unit>();
         region1 = new Region("Canada",0,0,3,9);
@@ -66,31 +70,15 @@ public class Board extends JPanel implements MouseListener{
         g.file.add(addPlayer);
         
     }
-        
-    //public void initTiles(){
-    //	 for(int i=0; i<tilePos.length;i++){
-    //		 for(int j=0; j<tilePos[i].length; j++){
-    //      	 tiles[i][j] = new Tile(tilePos[i][j]);
-    // 		 }
-    //   }
-    //}
  
     public void paintComponent(Graphics g){
-        //super.paint(g);
     	Graphics2D g2d = (Graphics2D) g;
         for(int i=0; i<tilePos.length; i++){  
-        	//g2d.drawLine(i*this.numPixels, 0, i*this.numPixels, tilePos[1].length*this.numPixels);
-            //g2d.drawLine(0, i*this.numPixels, tilePos[1].length*this.numPixels, i*this.numPixels);
-            //g2d.drawLine(i*this.numPixels, 0, tilePos[1].length*this.numPixels, i*this.numPixels);
         	for(int j=0; j<tilePos[i].length; j++){
-        		g2d.drawImage(new Tile(tilePos[i][j]).getImage(), j*this.numPixels,i*this.numPixels,this);              
-        		//g2d.drawLine(arg0, arg1, arg2, arg3)
+        		g2d.drawImage(new Tile(tilePos[i][j]).getImage(), j*this.numPixels,i*this.numPixels,this);
+        		g2d.drawRect(j*numPixels, i*numPixels, numPixels, numPixels);
         	}
         }
-        
-        //for(int i =0; i<tilePos[i].length; i++){
-        //	 g2d.drawLine(0, i*this.numPixels, tilePos[1].length*this.numPixels, i*this.numPixels);
-        //}
                 
         for(Unit u : units){
         	g2d.drawImage(u.getImage(), u.getCol()*this.numPixels + 10, u.getRow()*this.numPixels + 10, this);
