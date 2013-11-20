@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.util.LinkedList;
 
 import javax.swing.JOptionPane;
@@ -5,10 +6,11 @@ import javax.swing.JOptionPane;
 
 public class Region implements Vote{
 	//upper left and lower right points for a region we are assuming that regions are rectangular or square for now.
-	int ULrow; //upper left
-	int ULcol;
-	int LRrow; //lower right
-	int LRcol;
+	int x;
+	int y;
+	int length;
+	int width;
+	Color color;
 	enum govt{DEMOCRACY,DICTATORSHIP,NONE}
 	govt gov;
 	String name; //we should set an initial Region name - like hard code it ourselves, but maybe let the governor or dictator be able to change it when they start a country. or win a quo
@@ -16,12 +18,13 @@ public class Region implements Vote{
 	LinkedList<Unit> candidates; //people running in election
 	Unit ruler; //ruler either dictator or governor. the enum type distinguishes govt type.
 	
-	public Region(String name, int ULrow,int ULcol, int LRrow, int LRcol){
+	public Region(String name, int x, int y, int length, int width, Color color){
 		this.name = name;
-		this.ULrow = ULrow;
-		this.ULcol = ULcol;
-		this.LRrow = LRrow;
-		this.LRcol = LRcol;
+		this.x = x;
+		this.y = y;
+		this.length = length;
+		this.width = width;
+		this.color = color;
 		this.gov = govt.NONE;
 		citizens = new LinkedList<Unit>();
 	}

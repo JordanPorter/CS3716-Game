@@ -1,11 +1,11 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.swing.JMenuItem;
@@ -39,21 +39,20 @@ public class Board extends JPanel implements MouseListener{
     Unit activeUnit = null;
     
     LinkedList<Unit> units;
-    ArrayList<Region> regions;
-    Region region1;
-    Region region2;
+    LinkedList<Region> regions;
     
     JMenuItem addPlayer;
+    JMenuItem exitGame;
     
     public Board(Game g){
     	setLayout(new BorderLayout());
     	g.setSize(numPixels*tilePos[0].length,numPixels*tilePos.length+45);
-        regions = new ArrayList<Region>();
+        regions = new LinkedList<Region>();
         units = new LinkedList<Unit>();
-        region1 = new Region("Canada",0,0,3,9);
-        region2 = new Region("US",4,0,7,9);
-        regions.add(region1);
-        regions.add(region2);
+        regions.add(new Region("Allanland", 0, 0, tilePos[0].length/2, tilePos.length/2, Color.MAGENTA));
+        regions.add(new Region("Jordanland",tilePos[0].length/2, 0, tilePos[0].length/2, tilePos.length/2, Color.BLUE));
+        regions.add(new Region("Joshland", 0, tilePos.length/2, tilePos[0].length/2, tilePos.length/2, Color.GREEN));
+        regions.add(new Region("Nishantland", tilePos[0].length/2, tilePos.length/2, tilePos[0].length/2, tilePos.length/2, Color.RED));
         addMouseListener(this);   
         
         addPlayer = new JMenuItem("Add Player");
@@ -67,7 +66,21 @@ public class Board extends JPanel implements MouseListener{
 			}
         	
         });
+        
+        exitGame = new JMenuItem("Exit Game");
+        exitGame.addActionListener(new ActionListener()	{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+        	
+        });
+        
         g.file.add(addPlayer);
+        g.file.add(exitGame);
+        g.file.remove(g.newGame);
+        g.file.remove(g.joinGame);
         
     }
  
@@ -79,8 +92,16 @@ public class Board extends JPanel implements MouseListener{
         		g2d.drawRect(j*numPixels, i*numPixels, numPixels, numPixels);
         	}
         }
+        for(Region r : regions)	{
+        	g.setColor(r.color);
+        	g.drawRect(r.x*60, r.y*60, r.x + r.length*60-1, r.y + r.width*60-1);
+        	g.setColor(Color.WHITE);
+        	g.drawString(r.name, r.x*60 + r.length/2*60, r.y*60 + r.width/2*60);
+        }
                 
         for(Unit u : units){
+        	g.setColor(Color.WHITE);
+        	g2d.drawString(u.playerName, u.getCol()*this.numPixels + 9, u.getRow()*this.numPixels + 10);
         	g2d.drawImage(u.getImage(), u.getCol()*this.numPixels + 10, u.getRow()*this.numPixels + 10, this);
         }
         g.dispose();
@@ -93,36 +114,42 @@ public class Board extends JPanel implements MouseListener{
     public void mouseExited(MouseEvent arg0) {}
     
     public void mousePressed(MouseEvent event) {
-    	int y = event.getX();
-        int x = event.getY();
-        x = x/this.numPixels; 
-        y = y/this.numPixels; 
-        System.out.println("MousePressed at : " + x + ", " + y);
-        for(Unit u : units)	{
-        	System.out.println(u.playerName + ": " + u.getRow() + ", " + u.getCol());
-        	if(u.getRow() == x && u.getCol() == y){
-        		activeUnit = u;
-        		System.out.println(u.playerName + " is Active");
-        		break;
-        	}
-        	else	{
-        		activeUnit = null;
-        	}
-        }  
+	    try {	
+    		int y = event.getX();
+	        int x = event.getY();
+	        x = x/this.numPixels; 
+	        y = y/this.numPixels; 
+	        for(Unit u : units)	{
+	        	if(u.getRow() == x && u.getCol() == y){
+	        		activeUnit = u;
+	        		break;
+	        	}
+	        	else	{
+	        		activeUnit = null;
+	        	}
+	        }
+	    }
+	    catch(Exception e)	{
+	    	System.out.println("NO PLAYER ON THE BOARD!");
+	    }
     }
     
     public void mouseReleased(MouseEvent event) {
-    	int y = event.getX();
-        int x = event.getY();
-        x = x/this.numPixels; //using truncation of integers to get rowNum
-        y = y/this.numPixels; //likewise here.
-        if(x < tilePos.length && y <tilePos[1].length){
-    		if(!tilePos[x][y].equals("W") && !tilePos[x][y].equals("M")){
-    			activeUnit.move(x, y);
-            	repaint();
-           	}
-        }
-        
+    	try	{
+	    	int y = event.getX();
+	        int x = event.getY();
+	        x = x/this.numPixels; //using truncation of integers to get rowNum
+	        y = y/this.numPixels; //likewise here.
+	        if(x < tilePos.length && y <tilePos[1].length){
+	    		if(!tilePos[x][y].equals("W") && !tilePos[x][y].equals("M")){
+	    			activeUnit.move(x, y);
+	            	repaint();
+	           	}
+	        }
+    	}
+    	catch(Exception e)	{
+    		System.out.println("No Active Player");
+    	}
     }
 
 }

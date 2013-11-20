@@ -23,8 +23,8 @@ public class Game extends JFrame implements ActionListener{
     
     private JMenuBar menu;
     public JMenu file;
-    private JMenuItem newGame;
-    private JMenuItem joinGame;
+    public JMenuItem newGame;
+    public JMenuItem joinGame;
     
     public Game(){
         this.setLayout(new BorderLayout());
