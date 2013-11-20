@@ -60,7 +60,11 @@ public class Board extends JPanel implements MouseListener{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				String name = JOptionPane.showInputDialog("Enter Your Name");
+				String name = null;
+				name = JOptionPane.showInputDialog("Enter Your Name");
+				while(name == null)	{
+					name = JOptionPane.showInputDialog("YOU MUST ENTER A NAME");
+				}
 				units.add(new Unit(0,0,"./img/Guy.png", name));
 				repaint();
 			}
