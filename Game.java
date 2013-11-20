@@ -18,8 +18,10 @@ public class Game extends JFrame implements ActionListener{
     private JLabel titlescreen;
     private JPanel tScreen;
 
+    static Game g;
+    
     private JMenuBar menu;
-    private JMenu file;
+    public JMenu file;
     private JMenuItem newGame;
     private JMenuItem joinGame;
     
@@ -37,7 +39,7 @@ public class Game extends JFrame implements ActionListener{
         newGame = new JMenuItem("New Game");
         newGame.addActionListener( new ActionListener (){
             public void actionPerformed(ActionEvent e){
-            	board = new Board();
+            	board = new Board(g);
             	main.removeAll();
             	main.add(board);
             	repaint();
@@ -65,7 +67,7 @@ public class Game extends JFrame implements ActionListener{
         Object o = evt.getSource();
     }
     public static void main(String[] args){
-        new Game();
+        g = new Game();
                 
     }
 }

@@ -22,7 +22,7 @@ public class Region implements Vote{
 		this.ULcol = ULcol;
 		this.LRrow = LRrow;
 		this.LRcol = LRcol;
-		this.gov = gov.NONE;
+		this.gov = govt.NONE;
 		citizens = new LinkedList<Unit>();
 	}
 	

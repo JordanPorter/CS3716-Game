@@ -6,7 +6,6 @@
 public class Happiness{
 	// enum type of each the different types of happiness in our game
     enum HapType {GOVERN, MONEY, LEFT_ALONE, BUILDING, KILLING};
-    //Map<Type, int value> map; 
     // type of happiness for the player associated
     HapType type;
     // amount of happiness

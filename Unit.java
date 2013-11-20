@@ -15,10 +15,10 @@ public class Unit {
 	String playerName;
 	//private String unitPicUrl; //= "unit.png"
 
-	public Unit(int row, int col, String unitPicUrl){
+	public Unit(int row, int col, String unitPicUrl, String playerName){
 		this.row = row;
 		this.col = col;
-		//this.unitPicUrl = unitPicUrl;
+		this.playerName = playerName;
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(unitPicUrl));
 		image = ii.getImage();
 		setHappiness();
