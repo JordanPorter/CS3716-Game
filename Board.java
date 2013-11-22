@@ -40,6 +40,7 @@ public class Board extends JPanel implements MouseListener{
     
     Unit activeUnit = null;
     
+    
     LinkedList<Unit> units;
     LinkedList<Region> regions;
     
@@ -57,10 +58,6 @@ public class Board extends JPanel implements MouseListener{
     	g.setSize(numPixels*tilePos[0].length,numPixels*tilePos.length+45);
         regions = new LinkedList<Region>();
         units = new LinkedList<Unit>();
-        regions.add(new Region("Allanland", 0, 0, tilePos[0].length/2, tilePos.length/2, Color.MAGENTA));
-        regions.add(new Region("Jordanland",tilePos[0].length/2, 0, tilePos[0].length/2, tilePos.length/2, Color.BLUE));
-        regions.add(new Region("Joshland", 0, tilePos.length/2, tilePos[0].length/2, tilePos.length/2, Color.GREEN));
-        regions.add(new Region("Nishantland", tilePos[0].length/2, tilePos.length/2, tilePos[0].length/2, tilePos.length/2, Color.RED));
         addMouseListener(this);   
         
         actions = new JMenu("Actions");
