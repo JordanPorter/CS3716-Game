@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
@@ -23,6 +24,13 @@ public class Unit {
 	Happiness hap;
 	String playerName;
 
+	/**
+	 * Constructor for Unit
+	 * @param row location of Unit
+	 * @param col location of Unit
+	 * @param unitPicUrl, url for image of Unit
+	 * @param playerName, name player has set for Unit
+	 */
 	public Unit(int row, int col, String unitPicUrl, String playerName){
 		this.row = row;
 		this.col = col;
@@ -32,30 +40,53 @@ public class Unit {
 		setHappiness();
 	}
 	
+	/**
+	 * 
+	 */
 	public Unit()	{
 	}
 	
+	/**
+	 * @return row location of Unit
+	 */
 	public int getRow()	{
 		return this.row;
 	}
 	
+	/**
+	 * @return col location of Unit
+	 */
 	public int getCol()	{
 		return this.col;
 	}
 	
+	/**
+	 * @return
+	 */
 	public int getX()	{
 		return col*60;
 	}
 	
+	/**
+	 * @return
+	 */
 	public int getY()	{
 		return row*60;
 	}
 	
+	/**
+	 * move changes the location of the Unit on the board
+	 * @param row
+	 * @param col
+	 */
 	public void move(int row,int col)	{
 		this.row = row; 
 		this.col = col;
 	}
 	
+	/**
+	 * @return image of the Unit
+	 */
 	public Image getImage()	{
 		return this.image;
 	}
@@ -67,20 +98,31 @@ public class Unit {
 	 * Happiness values will then be set.
 	 */
 	public void setHappiness(){
-		JPanel choices = new JPanel(new GridLayout(5,2));
+		// create JPanel for choices
+		JPanel choices = new JPanel(new GridLayout(6,2));
+		// initiate variables for values
 		double gValue = 0, mValue = 0, lValue = 0, bValue = 0, kValue = 0;
 		NumberFormat percentFormat = NumberFormat.getNumberInstance();
-		percentFormat.setMinimumFractionDigits(3);
+		percentFormat.setMinimumFractionDigits(2);
+		// create labels and fields for values
 		JLabel governLabel = new JLabel("Govern(%):");
-		JFormattedTextField gNum = new JFormattedTextField();
+		JFormattedTextField gNum = new JFormattedTextField(percentFormat);
 		JLabel moneyLabel = new JLabel("Money(%):");
-		JFormattedTextField mNum = new JFormattedTextField();
+		JFormattedTextField mNum = new JFormattedTextField(percentFormat);
 		JLabel left_aLabel = new JLabel("Left Alone(%):");
-		JFormattedTextField lNum = new JFormattedTextField();
+		JFormattedTextField lNum = new JFormattedTextField(percentFormat);
 		JLabel buildLabel = new JLabel("Building(%):");
-		JFormattedTextField bNum = new JFormattedTextField();
+		JFormattedTextField bNum = new JFormattedTextField(percentFormat);
 		JLabel killLabel = new JLabel("Killing(%):");
-		JFormattedTextField kNum = new JFormattedTextField();
+		JFormattedTextField kNum = new JFormattedTextField(percentFormat);
+		
+		// total field to display to the user amount they've placed so far.
+		//JLabel totalLabel = new JLabel("Total:");
+		//JFormattedTextField total = new JFormattedTextField(percentFormat);
+		//total.setEditable(false);
+		//total.setForeground(Color.red);
+		
+		// add fields and values to choices JPanel
 		choices.add(governLabel);
 		choices.add(gNum);
 		choices.add(moneyLabel);
@@ -91,25 +133,33 @@ public class Unit {
 		choices.add(bNum);
 		choices.add(killLabel);
 		choices.add(kNum);
+		
+		//choices.add(totalLabel);
+		//choices.add(total);
+		
+		// continue until the user enters the values correctly
 		while(true){
 			try{
-				JOptionPane.showConfirmDialog(null, choices, "Choose % happiness for each:", JOptionPane.OK_CANCEL_OPTION);
+				// pop up to prompt user to enter ratios for happiness values
+				JOptionPane.showConfirmDialog(null, choices, "Choose % happiness for each(Adding up to 100%):", JOptionPane.DEFAULT_OPTION);
 				gValue = Double.parseDouble(gNum.getText());
 				mValue = Double.parseDouble(mNum.getText());
 				lValue = Double.parseDouble(lNum.getText());
 				bValue = Double.parseDouble(bNum.getText());
 				kValue = Double.parseDouble(kNum.getText());
+				// if all values equal up to 100% then it was entered correctly
 				if((gValue + mValue + lValue + bValue + kValue) == 100) break;
 				else{
-					System.out.println("Not 100% assigned for Happiness");
-					JOptionPane.showMessageDialog(null, "Values must add up to 100.");
+					System.out.println("Values user entered do not equal 100");
+					JOptionPane.showMessageDialog(null,  "Values must add up to 100.", "ALERT", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 			catch(NumberFormatException e){
-				System.out.println("Number Format error");
-				JOptionPane.showMessageDialog(null, "Invalid number entered.");
+				System.out.println("Number Format error when setting Happiness ratios");
+				JOptionPane.showMessageDialog(null, "Invalid number entered.", "ALERT", JOptionPane.ERROR_MESSAGE);
 			}
 		}
+		// create happiness with the entered ratios
 		hap = new Happiness(gValue,mValue,lValue,bValue,kValue);
 	}
 }
