@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -40,10 +41,15 @@ public class Game extends JFrame implements ActionListener{
         newGame = new JMenuItem("New Game");
         newGame.addActionListener( new ActionListener (){
             public void actionPerformed(ActionEvent e){
-            	board = new Board(g);
-            	g.remove(mainPanel);
-            	g.add(board, BorderLayout.CENTER);
-            	repaint();
+            	try {
+					board = new Board(g);
+	            	g.remove(mainPanel);
+	            	g.add(board, BorderLayout.CENTER);
+	            	repaint();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
             }
         });
         joinGame = new JMenuItem("Join Game");

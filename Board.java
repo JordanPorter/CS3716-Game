@@ -6,10 +6,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Scanner;
 
-import javax.swing.JFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -24,60 +27,23 @@ import javax.swing.JPanel;
 */
 public class Board extends JPanel implements MouseListener{
     int numPixels = 60; //number of pixels in tile image - must be a square. (not the map just the tile)
-    String[][] tilePos = {			{"F","F","F","F","F","F","F","F","F","F","F","F","F","F"},
-                                    {"M","F","F","F","F","G","G","F","F","F","F","F","F","F"},
-                                    {"M","M","F","F","G","G","G","G","G","F","F","F","F","F"},
-                                    {"M","M","M","G","G","G","G","G","G","G","F","F","F","F"},
-                                    {"M","M","G","G","G","G","G","G","G","G","G","F","F","F"},
-                                    {"M","D","W","W","W","W","G","G","G","G","G","G","F","F"},
-                                    {"D","D","D","W","W","W","W","W","W","W","G","G","G","F"},
-                                    {"D","D","D","D","W","W","W","W","W","W","W","G","G","G"},
-                                    {"D","D","D","W","W","W","G","G","W","W","W","G","G","G"},
-                                    {"D","D","W","W","W","W","W","W","W","W","W","G","G","G"},
-                                    {"D","D","D","D","W","W","W","W","W","W","G","G","G","G"},
-                                    {"D","D","D","D","D","D","D","G","G","G","G","G","G","G"},
-    };
     
+    BufferedReader file;
     Unit activeUnit = null;
-    
-    
+    String[][] tilePos;
     LinkedList<Unit> units;
     LinkedList<Region> regions;
     
-    JMenu actions;
-    
-    JMenuItem createCountry;
     JMenuItem addPlayer;
     JMenuItem exitGame;
     
-    Game g;
-    
-    public Board(Game g){
-    	this.g = g;
+    public Board(Game g) throws IOException{
     	setLayout(new BorderLayout());
+    	loadMap();
     	g.setSize(numPixels*tilePos[0].length,numPixels*tilePos.length+45);
         regions = new LinkedList<Region>();
         units = new LinkedList<Unit>();
         addMouseListener(this);   
-        
-        actions = new JMenu("Actions");
-        
-        createCountry = new JMenuItem("Create Country");
-        createCountry.addActionListener(new ActionListener()	{
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				for(Region r : regions)	{
-					if(r.citizens.contains(activeUnit))	{
-						System.out.println("Taking Vote for Region: " + r.name + " With " + r.citizens.size() + " citizens");
-						r.isCountry = r.yay_nayVote();
-						System.out.println(r.name + " is Country: " + r.isCountry);
-					}
-				}
-			}
-        	
-        });
-        actions.add(createCountry);
         
         addPlayer = new JMenuItem("Add Player");
         addPlayer.addActionListener(new ActionListener()	{
@@ -107,13 +73,39 @@ public class Board extends JPanel implements MouseListener{
         
         g.file.add(addPlayer);
         g.file.add(exitGame);
-        g.menu.add(actions);
         g.file.remove(g.newGame);
         g.file.remove(g.joinGame);
         
     }
  
-    public void paintComponent(Graphics g){
+    
+    
+    
+    private void loadMap() throws IOException {
+		
+    	file = new BufferedReader(new FileReader("./img/Map1.map"));
+    	String current;
+    	Scanner sc = null;
+    	ArrayList<String[]> tile = new ArrayList<String[]>();
+    	while((current=file.readLine())!=null){
+    		sc = new Scanner(current);
+    		sc.useDelimiter(",");
+    		ArrayList<String> thisLine = new ArrayList<String>();
+    		while(sc.hasNext()){
+    			thisLine.add(sc.next());
+    		}
+    		String[] line = new String[thisLine.size()];
+    		tile.add(thisLine.toArray(line));
+    	}
+    	tilePos = new String[tile.size()][tile.get(0).length];
+    	tilePos = tile.toArray(tilePos);
+    	sc.close();
+    }
+
+
+
+
+	public void paintComponent(Graphics g){
     	Graphics2D g2d = (Graphics2D) g;
         for(int i=0; i<tilePos.length; i++){  
         	for(int j=0; j<tilePos[i].length; j++){
@@ -125,30 +117,19 @@ public class Board extends JPanel implements MouseListener{
         	r.trackCitizens(units);
         	g.setColor(r.color);
         	g.drawRect(r.x*60, r.y*60, r.x + r.length*60-1, r.y + r.width*60-1);
-        	if(r.isCountry)	{
-        		g.setColor(Color.GRAY);
-        		g.fillRect(r.x*60 + r.length/2*60 - 3, r.y*60 + r.width/2*60 - 15, r.name.length()*8, 15);
-        	}
         	g.setColor(Color.WHITE);
         	g.drawString(r.name, r.x*60 + r.length/2*60, r.y*60 + r.width/2*60);
-
         }
                 
         for(Unit u : units){
         	g.setColor(Color.WHITE);
-        	g2d.drawString(u.playerName, u.getCol()*this.numPixels + 10, u.getRow()*this.numPixels + 11);
+        	g2d.drawString(u.playerName, u.getCol()*this.numPixels + 9, u.getRow()*this.numPixels + 10);
         	g2d.drawImage(u.getImage(), u.getCol()*this.numPixels + 10, u.getRow()*this.numPixels + 10, this);
-        	if(u.equals(activeUnit))	{
-        		g.setColor(Color.RED);
-        		g2d.drawRect(u.getCol()*this.numPixels+5 , u.getRow()*this.numPixels, u.playerName.length()*8, 15);
-        	}
         }
         g.dispose();
     }
         
-    public void mouseClicked(MouseEvent event){
-    	
-    }
+    public void mouseClicked(MouseEvent event){}
     
     public void mouseEntered(MouseEvent arg0) {}
     
@@ -163,7 +144,6 @@ public class Board extends JPanel implements MouseListener{
 	        for(Unit u : units)	{
 	        	if(u.getRow() == x && u.getCol() == y){
 	        		activeUnit = u;
-	        		repaint();
 	        		break;
 	        	}
 	        	else	{
@@ -194,4 +174,5 @@ public class Board extends JPanel implements MouseListener{
     		System.out.println("No Active Player");
     	}
     }
+
 }
