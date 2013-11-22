@@ -6,7 +6,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.Scanner;
 
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -22,30 +27,19 @@ import javax.swing.JPanel;
 */
 public class Board extends JPanel implements MouseListener{
     int numPixels = 60; //number of pixels in tile image - must be a square. (not the map just the tile)
-    String[][] tilePos = {			{"F","F","F","F","F","F","F","F","F","F","F","F","F","F"},
-                                    {"M","F","F","F","F","G","G","F","F","F","F","F","F","F"},
-                                    {"M","M","F","F","G","G","G","G","G","F","F","F","F","F"},
-                                    {"M","M","M","G","G","G","G","G","G","G","F","F","F","F"},
-                                    {"M","M","G","G","G","G","G","G","G","G","G","F","F","F"},
-                                    {"M","D","W","W","W","W","G","G","G","G","G","G","F","F"},
-                                    {"D","D","D","W","W","W","W","W","W","W","G","G","G","F"},
-                                    {"D","D","D","D","W","W","W","W","W","W","W","G","G","G"},
-                                    {"D","D","D","W","W","W","G","G","W","W","W","G","G","G"},
-                                    {"D","D","W","W","W","W","W","W","W","W","W","G","G","G"},
-                                    {"D","D","D","D","W","W","W","W","W","W","G","G","G","G"},
-                                    {"D","D","D","D","D","D","D","G","G","G","G","G","G","G"},
-    };
     
+    BufferedReader file;
     Unit activeUnit = null;
-    
+    String[][] tilePos;
     LinkedList<Unit> units;
     LinkedList<Region> regions;
     
     JMenuItem addPlayer;
     JMenuItem exitGame;
     
-    public Board(Game g){
+    public Board(Game g) throws IOException{
     	setLayout(new BorderLayout());
+    	loadMap();
     	g.setSize(numPixels*tilePos[0].length,numPixels*tilePos.length+45);
         regions = new LinkedList<Region>();
         units = new LinkedList<Unit>();
@@ -88,7 +82,34 @@ public class Board extends JPanel implements MouseListener{
         
     }
  
-    public void paintComponent(Graphics g){
+    
+    
+    
+    private void loadMap() throws IOException {
+		
+    	file = new BufferedReader(new FileReader("./img/Map1.map"));
+    	String current;
+    	Scanner sc = null;
+    	ArrayList<String[]> tile = new ArrayList<String[]>();
+    	while((current=file.readLine())!=null){
+    		sc = new Scanner(current);
+    		sc.useDelimiter(",");
+    		ArrayList<String> thisLine = new ArrayList<String>();
+    		while(sc.hasNext()){
+    			thisLine.add(sc.next());
+    		}
+    		String[] line = new String[thisLine.size()];
+    		tile.add(thisLine.toArray(line));
+    	}
+    	tilePos = new String[tile.size()][tile.get(0).length];
+    	tilePos = tile.toArray(tilePos);
+    	sc.close();
+    }
+
+
+
+
+	public void paintComponent(Graphics g){
     	Graphics2D g2d = (Graphics2D) g;
         for(int i=0; i<tilePos.length; i++){  
         	for(int j=0; j<tilePos[i].length; j++){
