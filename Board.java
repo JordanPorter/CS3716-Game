@@ -121,7 +121,6 @@ public class Board extends JPanel implements MouseListener{
         for(int i=0; i<tilePos.length; i++){  
         	for(int j=0; j<tilePos[i].length; j++){
         		g2d.drawImage(new Tile(tilePos[i][j]).getImage(), j*this.numPixels,i*this.numPixels,this);
-        		g2d.drawRect(j*numPixels, i*numPixels, numPixels, numPixels);
         	}
         }
         for(Region r : regions)	{
