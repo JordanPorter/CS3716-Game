@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -26,14 +28,17 @@ import javax.swing.JPanel;
 * the unit's position and then redraws it on the board.
 */
 public class Board extends JPanel implements MouseListener{
-    int numPixels = 60; //number of pixels in tile image - must be a square. (not the map just the tile)
+    int numPixels = 30; //number of pixels in tile image - must be a square. (not the map just the tile)
     
     BufferedReader file;
     Unit activeUnit = null;
     String[][] tilePos;
-    LinkedList<Unit> units;
+    ArrayList<Unit> units;
     LinkedList<Region> regions;
     
+    JMenu actions;
+    
+    JMenuItem createCountry;
     JMenuItem addPlayer;
     JMenuItem exitGame;
     
@@ -42,7 +47,7 @@ public class Board extends JPanel implements MouseListener{
     	loadMap();
     	g.setSize(numPixels*tilePos[0].length,numPixels*tilePos.length+45);
         regions = new LinkedList<Region>();
-        units = new LinkedList<Unit>();
+        units = new ArrayList<Unit>();
         addMouseListener(this);   
         
         addPlayer = new JMenuItem("Add Player");
@@ -71,6 +76,27 @@ public class Board extends JPanel implements MouseListener{
         	
         });
         
+       actions = new JMenu("Actions");
+                
+        createCountry = new JMenuItem("Create Country");
+        createCountry.addActionListener(new ActionListener()	{
+        
+        @Override
+        	public void actionPerformed(ActionEvent arg0) {
+        		for(Region r : regions)	{
+        			if(r.citizens.contains(activeUnit))	{
+        				System.out.println("Taking Vote for Region: " + r.name + " With " + r.citizens.size() + " citizens");
+        				Election e = new Election(r.citizens);
+        				r.isCountry = e.yay_nayVote();
+        				System.out.println(r.name + " is Country: " + r.isCountry);
+        				}
+        			}
+        		}
+            });
+        actions.add(createCountry);
+        
+        g.menu.add(actions);
+        
         g.file.add(addPlayer);
         g.file.add(exitGame);
         g.file.remove(g.newGame);
@@ -83,7 +109,7 @@ public class Board extends JPanel implements MouseListener{
     
     private void loadMap() throws IOException {
 		
-    	file = new BufferedReader(new FileReader("./img/Map1.map"));
+    	file = new BufferedReader(new FileReader("./img/Map2.map"));
     	String current;
     	Scanner sc = null;
     	ArrayList<String[]> tile = new ArrayList<String[]>();
@@ -109,12 +135,11 @@ public class Board extends JPanel implements MouseListener{
     	Graphics2D g2d = (Graphics2D) g;
         for(int i=0; i<tilePos.length; i++){  
         	for(int j=0; j<tilePos[i].length; j++){
-        		g2d.drawImage(new Tile(tilePos[i][j]).getImage(), j*this.numPixels,i*this.numPixels,this);
+        		g2d.drawImage(new Tile(tilePos[i][j]).getImage(), j*this.numPixels,i*this.numPixels, numPixels, numPixels, this);
         	}
         }
         for(Region r : regions)	{
         	
-        	r.trackCitizens(units);
         	g.setColor(r.color);
         	g.drawRect(r.x*60, r.y*60, r.x + r.length*60-1, r.y + r.width*60-1);
         	g.setColor(Color.WHITE);
@@ -122,9 +147,14 @@ public class Board extends JPanel implements MouseListener{
         }
                 
         for(Unit u : units){
+        	if(u.equals(activeUnit))	{
+        		g.setColor(Color.RED);
+        		g2d.fillRect(u.getCol()*this.numPixels+7, u.getRow()*this.numPixels-1 , (int) (u.playerName.length()*7.5), 14);
+        	}
         	g.setColor(Color.WHITE);
-        	g2d.drawString(u.playerName, u.getCol()*this.numPixels + 9, u.getRow()*this.numPixels + 10);
-        	g2d.drawImage(u.getImage(), u.getCol()*this.numPixels + 10, u.getRow()*this.numPixels + 10, this);
+        	g2d.setFont(Font.getFont("Courier"));
+        	g2d.drawString(u.playerName, u.getCol()*this.numPixels + 4, u.getRow()*this.numPixels + 5);
+        	g2d.drawImage(u.getImage(), u.getCol()*this.numPixels , u.getRow()*this.numPixels, numPixels, numPixels, this);
         }
         g.dispose();
     }
@@ -144,6 +174,7 @@ public class Board extends JPanel implements MouseListener{
 	        for(Unit u : units)	{
 	        	if(u.getRow() == x && u.getCol() == y){
 	        		activeUnit = u;
+	        		repaint();
 	        		break;
 	        	}
 	        	else	{

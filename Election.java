@@ -15,6 +15,10 @@ public class Election {
 		this.citizens = citizens;
 	}
 	
+	public Election(ArrayList<Unit> candidates)	{
+		this.candidates = candidates;
+	}
+	
 	public Unit electionVote() {
 		Unit winner = null;
 		String[] options = new String[candidates.size()];
