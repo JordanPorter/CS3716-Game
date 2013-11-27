@@ -14,6 +14,8 @@ public class Tile {
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(imageUrl)); 
 		this.image = ii.getImage();
 	}
-	public Image getImage(){return this.image;}
+	public Image getImage(){
+		return this.image;
+	}
 
 }
