@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -31,9 +32,12 @@ public class Board extends JPanel implements MouseListener{
     BufferedReader file;
     Unit activeUnit = null;
     String[][] tilePos;
-    LinkedList<Unit> units;
+    ArrayList<Unit> units;
     LinkedList<Region> regions;
     
+    JMenu actions;
+    
+    JMenuItem createCountry;
     JMenuItem addPlayer;
     JMenuItem exitGame;
     
@@ -42,7 +46,7 @@ public class Board extends JPanel implements MouseListener{
     	loadMap();
     	g.setSize(numPixels*tilePos[0].length,numPixels*tilePos.length+45);
         regions = new LinkedList<Region>();
-        units = new LinkedList<Unit>();
+        units = new ArrayList<Unit>();
         addMouseListener(this);   
         
         addPlayer = new JMenuItem("Add Player");
@@ -70,6 +74,27 @@ public class Board extends JPanel implements MouseListener{
 			}
         	
         });
+        
+       actions = new JMenu("Actions");
+                
+        createCountry = new JMenuItem("Create Country");
+        createCountry.addActionListener(new ActionListener()	{
+        
+        @Override
+        	public void actionPerformed(ActionEvent arg0) {
+        		for(Region r : regions)	{
+        			if(r.citizens.contains(activeUnit))	{
+        				System.out.println("Taking Vote for Region: " + r.name + " With " + r.citizens.size() + " citizens");
+        				Election e = new Election(r.citizens);
+        				r.isCountry = e.yay_nayVote();
+        				System.out.println(r.name + " is Country: " + r.isCountry);
+        				}
+        			}
+        		}
+            });
+        actions.add(createCountry);
+        
+        g.menu.add(actions);
         
         g.file.add(addPlayer);
         g.file.add(exitGame);
@@ -114,7 +139,6 @@ public class Board extends JPanel implements MouseListener{
         }
         for(Region r : regions)	{
         	
-        	r.trackCitizens(units);
         	g.setColor(r.color);
         	g.drawRect(r.x*60, r.y*60, r.x + r.length*60-1, r.y + r.width*60-1);
         	g.setColor(Color.WHITE);

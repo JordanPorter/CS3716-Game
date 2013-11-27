@@ -1,7 +1,6 @@
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.LinkedList;
-
-import javax.swing.JOptionPane;
 
 
 public class Region	{
@@ -10,14 +9,20 @@ public class Region	{
 	int y;
 	int length;
 	int width;
+	
 	Color color;
+	
 	enum govt{DEMOCRACY,DICTATORSHIP,NONE}
 	govt gov;
+	
 	boolean isCountry = false;
-	String name; //we should set an initial Region name - like hard code it ourselves, but maybe let the governor or dictator be able to change it when they start a country. or win a quo
-	LinkedList<Unit> citizens; //people belonging to a country
-	LinkedList<Unit> candidates; //people running in election
-	Unit ruler; //ruler either dictator or governor. the enum type distinguishes govt type.
+	
+	String name; 
+	
+	ArrayList<Unit> citizens; 
+	LinkedList<Unit> candidates; 
+	
+	Unit ruler; 
 	
 	public Region(String name, int x, int y, int length, int width, Color color){
 		this.name = name;
@@ -27,7 +32,7 @@ public class Region	{
 		this.width = width;
 		this.color = color;
 		this.gov = govt.NONE;
-		citizens = new LinkedList<Unit>();
+		citizens = new ArrayList<Unit>();
 	}
 	
 	public void setRuler(Unit unit){
@@ -50,9 +55,9 @@ public class Region	{
 		this.citizens.add(unit);
 	}
 	
-	public LinkedList<Unit> getCitizens(){
+	public ArrayList<Unit> getCitizens(){
 		return this.citizens;
-	}//maybe returning an iterator would be better here.
+	}
 
 	public void trackCitizens(LinkedList<Unit> units)	{
 		for(Unit u : units)	{
