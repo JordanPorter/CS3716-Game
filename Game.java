@@ -59,7 +59,6 @@ public class Game extends JFrame implements ActionListener{
 	            	g.add(board, BorderLayout.CENTER);
 	            	repaint();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
             }
