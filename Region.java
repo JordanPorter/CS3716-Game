@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 
-public class Region implements Vote{
+public class Region	{
 	//upper left and lower right points for a region we are assuming that regions are rectangular or square for now.
 	int x;
 	int y;
@@ -67,53 +67,5 @@ public class Region implements Vote{
 			else
 				citizens.remove(u);
 		}
-	}
-	
-	@Override
-	public Candidate electionVote(LinkedList<Unit> electionCandidates) {
-		LinkedList<Candidate> candidates = new LinkedList<Candidate>();
-		for(int i=0; i<electionCandidates.size(); i++)	{
-			candidates.add(new Candidate(electionCandidates.get(i), electionCandidates.get(i).playerName));
-		}
-		Candidate winner = null;
-		String[] options = new String[candidates.size()];
-		for(int i=0; i<options.length; i++)	{
-			options[i] = candidates.get(i).playerName;
-		}
-		
-		
-		for(Unit u : citizens)	{
-			String thisVote = (String) JOptionPane.showInputDialog(null, "Select the name of your vote:", u.playerName + " Vote Now", JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-			for(Candidate c : candidates)	{
-				if(c.name.equalsIgnoreCase(thisVote))
-					c.votedFor();
-				if(winner == null)
-					winner = c;
-				if(c.getVotesFor() > winner.getVotesFor() && winner != null)
-					winner = c;
-			}
-		}
-		return winner;
-	}
-
-	@Override
-	public boolean yay_nayVote() {
-		LinkedList<Unit> yayVotes = new LinkedList<Unit>();
-		LinkedList<Unit> nayVotes = new LinkedList<Unit>();
-		for(Unit u : citizens)	{
-			System.out.println(u.playerName);
-			String thisVote = (String) JOptionPane.showInputDialog(null, u.playerName + " enter your vote (yay/nay/don't care):", JOptionPane.PLAIN_MESSAGE);
-			if(thisVote.equalsIgnoreCase("yay"))
-				yayVotes.add(u);
-			else if(thisVote.equalsIgnoreCase("nay"))
-				nayVotes.add(u);
-			else
-				System.out.println("Don't Care Vote");
-		}
-		if(yayVotes.size() > nayVotes.size())
-			return true;
-		else 
-			return false;
-	}
-	
+	}	
 }
