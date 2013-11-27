@@ -2,7 +2,9 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -10,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
@@ -42,7 +45,16 @@ public class Game extends JFrame implements ActionListener{
         newGame.addActionListener( new ActionListener (){
             public void actionPerformed(ActionEvent e){
             	try {
-					board = new Board(g);
+            		ArrayList<String> maps = new ArrayList<String>();
+            		File dir = new File("./img");
+            		for(File f : dir.listFiles())	{
+            			if(f.getName().endsWith(".map"))
+            				maps.add(f.getName());
+            		}
+            		int selectedMap = JOptionPane.showOptionDialog(null, "Select a Map", "Map Selection", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, maps.toArray(), null);
+					System.out.println(selectedMap);
+					System.out.println(maps.get(selectedMap));
+            		board = new Board(g, new File(maps.get(selectedMap)));
 	            	g.remove(mainPanel);
 	            	g.add(board, BorderLayout.CENTER);
 	            	repaint();
