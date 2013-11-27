@@ -66,6 +66,7 @@ public class Board extends JPanel implements MouseListener{
 				while(name == null)	{
 					name = JOptionPane.showInputDialog("YOU MUST ENTER A NAME");
 				}
+				
 				units.add(new Unit(0,0,"./img/Guy.png", name));
 				repaint();
 			}
@@ -165,7 +166,9 @@ public class Board extends JPanel implements MouseListener{
         g.dispose();
     }
         
-    public void mouseClicked(MouseEvent event){}
+    public void mouseClicked(MouseEvent event){
+    	
+    }
     
     public void mouseEntered(MouseEvent arg0) {}
     
