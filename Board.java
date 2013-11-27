@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -42,7 +43,12 @@ public class Board extends JPanel implements MouseListener{
     JMenuItem addPlayer;
     JMenuItem exitGame;
     
-    public Board(Game g) throws IOException{
+    File map;
+    
+    public Board(Game g, File map) throws IOException{
+    	
+    	this.map = map;
+    	
     	setLayout(new BorderLayout());
     	loadMap();
     	g.setSize(numPixels*tilePos[0].length,numPixels*tilePos.length+45);
@@ -109,7 +115,7 @@ public class Board extends JPanel implements MouseListener{
     
     private void loadMap() throws IOException {
 		
-    	file = new BufferedReader(new FileReader("./img/Map2.map"));
+    	file = new BufferedReader(new FileReader("./img/" + map));
     	String current;
     	Scanner sc = null;
     	ArrayList<String[]> tile = new ArrayList<String[]>();
