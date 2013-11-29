@@ -4,21 +4,35 @@ import java.util.LinkedList;
 import javax.swing.JOptionPane;
 
 
+/**
+ * @author 
+ *
+ */
 public class Election {
 
 	ArrayList<Unit> citizens;
 	ArrayList<Unit> candidates;
 	String[] votes;
 	
+	/**
+	 * @param candidates
+	 * @param citizens
+	 */
 	public Election(ArrayList<Unit> candidates, ArrayList<Unit> citizens)	{
 		this.candidates = candidates;
 		this.citizens = citizens;
 	}
 	
+	/**
+	 * @param candidates
+	 */
 	public Election(ArrayList<Unit> candidates)	{
 		this.candidates = candidates;
 	}
 	
+	/**
+	 * @return
+	 */
 	public Unit electionVote() {
 		Unit winner = null;
 		String[] options = new String[candidates.size()];
@@ -37,6 +51,9 @@ public class Election {
 		return winner;
 	}
 	
+	/**
+	 * @return
+	 */
 	public boolean yay_nayVote() {
 		LinkedList<Unit> yayVotes = new LinkedList<Unit>();
 		LinkedList<Unit> nayVotes = new LinkedList<Unit>();

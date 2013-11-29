@@ -1,4 +1,5 @@
 /**
+ * @author Joshua Rodgers
  * Happiness is the class for the amount of happiness a player will have
  * each type of happiness type is calculated in a different way and will give 
  * a score to the player which the player will try to get the highest to win

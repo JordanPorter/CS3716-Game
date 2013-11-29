@@ -107,7 +107,6 @@ public class Board extends JPanel implements MouseListener{
         g.file.add(addPlayer);
         g.file.add(exitGame);
         g.file.remove(g.newGame);
-        g.file.remove(g.joinGame);
         
     }
  

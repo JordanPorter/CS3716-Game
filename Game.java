@@ -15,6 +15,10 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+/**
+ * @author Joshua, Jordan
+ *
+ */
 @SuppressWarnings("serial")
 public class Game extends JFrame implements ActionListener{
     private ImageIcon title = new ImageIcon("./img/TITLE.png");
@@ -28,8 +32,12 @@ public class Game extends JFrame implements ActionListener{
     public JMenuBar menu;
     public JMenu file;
     public JMenuItem newGame;
-    public JMenuItem joinGame;
+    public JMenu help;
+    public JMenuItem helpitem;
     
+    /**
+     * 
+     */
     public Game(){
         this.setLayout(new BorderLayout());
         setSize(610,510);
@@ -42,6 +50,7 @@ public class Game extends JFrame implements ActionListener{
         file.setMnemonic(KeyEvent.VK_F);
         
         newGame = new JMenuItem("New Game");
+        newGame.setMnemonic(KeyEvent.VK_N);
         newGame.addActionListener( new ActionListener (){
             public void actionPerformed(ActionEvent e){
             	try {
@@ -63,10 +72,16 @@ public class Game extends JFrame implements ActionListener{
 				}
             }
         });
-        joinGame = new JMenuItem("Join Game");
+        
+        help = new JMenu("Help");
+        help.setMnemonic(KeyEvent.VK_H);
+        helpitem = new JMenuItem("ReadMe");
+        helpitem.setMnemonic(KeyEvent.VK_R);
+        
         menu.add(file);
+        menu.add(help);
+        help.add(helpitem);
         file.add(newGame);
-        file.add(joinGame);
         this.add(menu, BorderLayout.NORTH);
                 
         titlescreen = new JLabel(title);
@@ -82,8 +97,14 @@ public class Game extends JFrame implements ActionListener{
         this.setVisible(true);
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed( ActionEvent evt ){
     }
+    /**
+     * @param args
+     */
     public static void main(String[] args){
         g = new Game();         
     }

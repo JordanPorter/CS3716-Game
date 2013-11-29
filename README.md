@@ -1,6 +1,10 @@
 CS3716-Game
 ===========
 
+===========
+Details
+===========
+
 CS3716 -Game Project
 
 CS3716-Game is a java game project that creates a GUI based strategy game.
@@ -24,6 +28,10 @@ Game.java creates the frame of the game and adds the Board panel to itself.
 
 The 8 image files that are attached with the code will be used as a data file so the code wouldn't run without them.
 
+===========
+Run
+===========
+
 The code can be compiled by:
 
 $ javac Board.java Tile.java Unit.java Game.java
@@ -38,4 +46,7 @@ or Alternatively, The jar file can be run directly by the following command:
 
 $java -jar CS3716-Game.jar 
 
+===========
+How to Play
+===========
 
