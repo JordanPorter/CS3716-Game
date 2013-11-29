@@ -2,7 +2,9 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -14,6 +16,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 /**
  * @author Joshua, Jordan
@@ -75,6 +78,29 @@ public class Game extends JFrame implements ActionListener{
         help.setMnemonic(KeyEvent.VK_H);
         helpitem = new JMenuItem("ReadMe");
         helpitem.setMnemonic(KeyEvent.VK_R);
+        helpitem.addActionListener( new ActionListener(){
+        	public void actionPerformed(ActionEvent e){
+        		JFrame read = new JFrame();
+        		JPanel readme = new JPanel();
+        		JTextArea readFile = new JTextArea();
+        		try{	
+        			BufferedReader input = new BufferedReader(new FileReader("README.md"));
+        			String line = null;
+        			while( (line = input.readLine()) != null){
+        				readFile.append(line + "\n");
+        			}
+        			input.close();
+        		}
+        		catch(IOException er){
+        			System.out.println("File error");
+    				JOptionPane.showMessageDialog(null, "Invalid number entered.", "ALERT", JOptionPane.ERROR_MESSAGE);
+        		}
+        		readme.add(readFile);
+        		read.setTitle("CS3716 Project ReadMe");
+        		read.add(readme);
+        		read.setVisible( true );
+        	}
+        });
         
         menu.add(file);
         menu.add(help);
