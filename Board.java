@@ -69,6 +69,7 @@ public class Board extends JPanel implements MouseListener{
 				}
 				
 				newUnit = new Unit(0,0,"./img/Guy.png", name);
+				JOptionPane.showMessageDialog(null, "Click To Place Character");
 			}
         	
         });
