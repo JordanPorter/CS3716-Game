@@ -183,7 +183,6 @@ public class Board extends JPanel implements MouseListener{
         
     public void mouseClicked(MouseEvent event){
     	if(newUnit != null)	{
-    		System.out.println("Setting Unit Place");
     		int y = event.getX();
 	        int x = event.getY();
 	        x = x/this.numPixels; 
@@ -232,6 +231,12 @@ public class Board extends JPanel implements MouseListener{
 	    			activeUnit.move(x, y);
 	            	repaint();
 	           	}
+	    		else if(tilePos[x][y].equals("W"))	{
+	    			units.remove(activeUnit);
+	    			repaint();
+					JOptionPane.showMessageDialog(null, "YOU HAVE DROWNED! Click The Map To Resurrect Yourself");
+	    			newUnit = activeUnit;
+	    		}
 	        }
 	        
     	}
