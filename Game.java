@@ -61,8 +61,6 @@ public class Game extends JFrame implements ActionListener{
             				maps.add(f.getName());
             		}
             		int selectedMap = JOptionPane.showOptionDialog(null, "Select a Map", "Map Selection", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, maps.toArray(), null);
-					System.out.println(selectedMap);
-					System.out.println(maps.get(selectedMap));
             		board = new Board(g, new File(maps.get(selectedMap)));
 	            	g.remove(mainPanel);
 	            	g.add(board, BorderLayout.CENTER);

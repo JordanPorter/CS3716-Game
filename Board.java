@@ -155,11 +155,11 @@ public class Board extends JPanel implements MouseListener{
         for(Unit u : units){
         	if(u.equals(activeUnit))	{
         		g.setColor(Color.RED);
-        		g2d.fillRect(u.getCol()*this.numPixels+7, u.getRow()*this.numPixels-1 , (int) (u.playerName.length()*7.5), 14);
+        		g2d.fillRect(u.getCol()*this.numPixels, u.getRow()*this.numPixels-18, (int) (u.playerName.length()*7.5), 14);
         	}
         	g.setColor(Color.WHITE);
         	g2d.setFont(Font.getFont("Courier"));
-        	g2d.drawString(u.playerName, u.getCol()*this.numPixels + 4, u.getRow()*this.numPixels + 5);
+        	g2d.drawString(u.playerName, u.getCol()*this.numPixels, u.getRow()*this.numPixels-6);
         	g2d.drawImage(u.getImage(), u.getCol()*this.numPixels , u.getRow()*this.numPixels, numPixels, numPixels, this);
         }
         g.dispose();
