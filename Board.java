@@ -33,6 +33,7 @@ public class Board extends JPanel implements MouseListener{
     
     BufferedReader file;
     Unit activeUnit = null;
+    Unit newUnit = null;
     String[][] tilePos;
     ArrayList<Unit> units;
     LinkedList<Region> regions;
@@ -67,8 +68,8 @@ public class Board extends JPanel implements MouseListener{
 					name = JOptionPane.showInputDialog("YOU MUST ENTER A NAME");
 				}
 				
-				units.add(new Unit(0,0,"./img/Guy.png", name));
-				repaint();
+				newUnit = new Unit(0,0,"./img/Guy.png", name);
+				JOptionPane.showMessageDialog(null, "Click To Place Character");
 			}
         	
         });
@@ -115,6 +116,21 @@ public class Board extends JPanel implements MouseListener{
     
     private void loadMap() throws IOException {
 		
+    	switch(this.map.getName())	{
+    		case "Map4.map":
+    			numPixels = 10;
+    			break;
+    		case "Map3.map":
+    			numPixels = 20;
+    			break;
+    		case "Map2.map":
+    			numPixels = 25;
+    			break;
+    		case "Map1.map":
+    			numPixels = 30;
+    			break;
+    	}
+    	
     	file = new BufferedReader(new FileReader("./img/" + map));
     	String current;
     	Scanner sc = null;
@@ -166,7 +182,17 @@ public class Board extends JPanel implements MouseListener{
     }
         
     public void mouseClicked(MouseEvent event){
-    	
+    	if(newUnit != null)	{
+    		System.out.println("Setting Unit Place");
+    		int y = event.getX();
+	        int x = event.getY();
+	        x = x/this.numPixels; 
+	        y = y/this.numPixels;
+    		newUnit.move(x, y);
+    		units.add(newUnit);
+    		newUnit = null;
+    		repaint();
+    	}
     }
     
     public void mouseEntered(MouseEvent arg0) {}
@@ -202,7 +228,7 @@ public class Board extends JPanel implements MouseListener{
 	        x = x/this.numPixels; //using truncation of integers to get rowNum
 	        y = y/this.numPixels; //likewise here.
 	        if(x < tilePos.length && y <tilePos[1].length){
-	    		if(!tilePos[x][y].equals("W") && !tilePos[x][y].equals("M")){
+	    		if(!tilePos[x][y].equals("W"))	{
 	    			activeUnit.move(x, y);
 	            	repaint();
 	           	}
