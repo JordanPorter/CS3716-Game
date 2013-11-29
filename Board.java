@@ -29,7 +29,7 @@ import javax.swing.JPanel;
 * the unit's position and then redraws it on the board.
 */
 public class Board extends JPanel implements MouseListener{
-    int numPixels = 30; //number of pixels in tile image - must be a square. (not the map just the tile)
+    int numPixels = 15; //number of pixels in tile image - must be a square. (not the map just the tile)
     
     BufferedReader file;
     Unit activeUnit = null;
