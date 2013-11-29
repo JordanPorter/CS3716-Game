@@ -1,3 +1,4 @@
+===========
 CS3716-Game
 ===========
 
@@ -50,3 +51,8 @@ $java -jar CS3716-Game.jar
 How to Play
 ===========
 
+-New Game:
+When the game is loaded you'll have the option to create a new game
+When you start the game you'll be prompt to choose your map type you'd like to play on during your session.
+
+When the game loads you'll have the board with no players or anything just the map.
