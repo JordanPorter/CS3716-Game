@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.BufferedReader;
@@ -58,6 +59,7 @@ public class Board extends JPanel implements MouseListener{
         addMouseListener(this);   
         
         addPlayer = new JMenuItem("Add Player");
+        addPlayer.setMnemonic(KeyEvent.VK_A);
         addPlayer.addActionListener(new ActionListener()	{
 
 			@Override
@@ -75,6 +77,7 @@ public class Board extends JPanel implements MouseListener{
         });
         
         exitGame = new JMenuItem("Exit Game");
+        exitGame.setMnemonic(KeyEvent.VK_X);
         exitGame.addActionListener(new ActionListener()	{
 
 			@Override
@@ -85,8 +88,10 @@ public class Board extends JPanel implements MouseListener{
         });
         
        actions = new JMenu("Actions");
+       actions.setMnemonic(KeyEvent.VK_A);
                 
         createCountry = new JMenuItem("Create Country");
+        createCountry.setMnemonic(KeyEvent.VK_C);
         createCountry.addActionListener(new ActionListener()	{
         
         @Override

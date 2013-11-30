@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -16,6 +17,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -81,8 +83,11 @@ public class Game extends JFrame implements ActionListener{
         helpitem.addActionListener( new ActionListener(){
         	public void actionPerformed(ActionEvent e){
         		JFrame read = new JFrame();
-        		JPanel readme = new JPanel();
+        		JPanel content = new JPanel();
         		JTextArea readFile = new JTextArea();
+        		JScrollPane readme = new JScrollPane(readFile);
+        		readme.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        		readme.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         		try{	
         			BufferedReader input = new BufferedReader(new FileReader("README.md"));
         			String line = null;
@@ -93,11 +98,14 @@ public class Game extends JFrame implements ActionListener{
         		}
         		catch(IOException er){
         			System.out.println("File error");
-    				JOptionPane.showMessageDialog(null, "Invalid number entered.", "ALERT", JOptionPane.ERROR_MESSAGE);
+    				JOptionPane.showMessageDialog(null, "Couldn't read file.", "ALERT", JOptionPane.ERROR_MESSAGE);
         		}
-        		readme.add(readFile);
+        		content.setLayout(new BorderLayout());
+        		content.setPreferredSize(new Dimension(500,500));
+        		content.add(readme);
         		read.setTitle("CS3716 Project ReadMe");
-        		read.add(readme);
+        		read.setSize(content.getPreferredSize());
+        		read.add(content);
         		read.setVisible( true );
         	}
         });
