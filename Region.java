@@ -3,6 +3,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 
+/**
+ * @author 
+ *
+ */
 public class Region	{
 	//upper left and lower right points for a region we are assuming that regions are rectangular or square for now.
 	int x;
@@ -24,6 +28,14 @@ public class Region	{
 	
 	Unit ruler; 
 	
+	/**
+	 * @param name
+	 * @param x
+	 * @param y
+	 * @param length
+	 * @param width
+	 * @param color
+	 */
 	public Region(String name, int x, int y, int length, int width, Color color){
 		this.name = name;
 		this.x = x;
@@ -35,30 +47,51 @@ public class Region	{
 		citizens = new ArrayList<Unit>();
 	}
 	
+	/**
+	 * @param unit
+	 */
 	public void setRuler(Unit unit){
 		this.ruler = unit;	
 	}
 	
+	/**
+	 * @return
+	 */
 	public Unit getRuler(){
 		return this.ruler;
 	}
 	
+	/**
+	 * @param name
+	 */
 	public void setName(String name){
 		this.name = name;
 	}
 	
+	/**
+	 * @return
+	 */
 	public String getName(){
 		return this.name;
 	}
 	
+	/**
+	 * @param unit
+	 */
 	public void addCitizen(Unit unit){
 		this.citizens.add(unit);
 	}
 	
+	/**
+	 * @return
+	 */
 	public ArrayList<Unit> getCitizens(){
 		return this.citizens;
 	}
 
+	/**
+	 * @param units
+	 */
 	public void trackCitizens(LinkedList<Unit> units)	{
 		for(Unit u : units)	{
 			if(u.getX() >= this.x*60 && u.getX() <= (this.x+length-1)*60)	{

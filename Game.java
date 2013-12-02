@@ -1,8 +1,11 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -14,7 +17,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 
+/**
+ * @author Joshua, Jordan
+ *
+ */
 @SuppressWarnings("serial")
 public class Game extends JFrame implements ActionListener{
     private ImageIcon title = new ImageIcon("./img/TITLE.png");
@@ -28,8 +37,12 @@ public class Game extends JFrame implements ActionListener{
     public JMenuBar menu;
     public JMenu file;
     public JMenuItem newGame;
-    public JMenuItem joinGame;
+    public JMenu help;
+    public JMenuItem helpitem;
     
+    /**
+     * 
+     */
     public Game(){
         this.setLayout(new BorderLayout());
         setSize(610,510);
@@ -42,6 +55,7 @@ public class Game extends JFrame implements ActionListener{
         file.setMnemonic(KeyEvent.VK_F);
         
         newGame = new JMenuItem("New Game");
+        newGame.setMnemonic(KeyEvent.VK_N);
         newGame.addActionListener( new ActionListener (){
             public void actionPerformed(ActionEvent e){
             	try {
@@ -52,8 +66,6 @@ public class Game extends JFrame implements ActionListener{
             				maps.add(f.getName());
             		}
             		int selectedMap = JOptionPane.showOptionDialog(null, "Select a Map", "Map Selection", JOptionPane.OK_OPTION, JOptionPane.INFORMATION_MESSAGE, null, maps.toArray(), null);
-					System.out.println(selectedMap);
-					System.out.println(maps.get(selectedMap));
             		board = new Board(g, new File(maps.get(selectedMap)));
 	            	g.remove(mainPanel);
 	            	g.add(board, BorderLayout.CENTER);
@@ -63,10 +75,45 @@ public class Game extends JFrame implements ActionListener{
 				}
             }
         });
-        joinGame = new JMenuItem("Join Game");
+        
+        help = new JMenu("Help");
+        help.setMnemonic(KeyEvent.VK_H);
+        helpitem = new JMenuItem("ReadMe");
+        helpitem.setMnemonic(KeyEvent.VK_R);
+        helpitem.addActionListener( new ActionListener(){
+        	public void actionPerformed(ActionEvent e){
+        		JFrame read = new JFrame();
+        		JPanel content = new JPanel();
+        		JTextArea readFile = new JTextArea();
+        		JScrollPane readme = new JScrollPane(readFile);
+        		readme.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        		readme.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        		try{	
+        			BufferedReader input = new BufferedReader(new FileReader("README.md"));
+        			String line = null;
+        			while( (line = input.readLine()) != null){
+        				readFile.append(line + "\n");
+        			}
+        			input.close();
+        		}
+        		catch(IOException er){
+        			System.out.println("File error");
+    				JOptionPane.showMessageDialog(null, "Couldn't read file.", "ALERT", JOptionPane.ERROR_MESSAGE);
+        		}
+        		content.setLayout(new BorderLayout());
+        		content.setPreferredSize(new Dimension(500,500));
+        		content.add(readme);
+        		read.setTitle("CS3716 Project ReadMe");
+        		read.setSize(content.getPreferredSize());
+        		read.add(content);
+        		read.setVisible( true );
+        	}
+        });
+        
         menu.add(file);
+        menu.add(help);
+        help.add(helpitem);
         file.add(newGame);
-        file.add(joinGame);
         this.add(menu, BorderLayout.NORTH);
                 
         titlescreen = new JLabel(title);
@@ -82,8 +129,14 @@ public class Game extends JFrame implements ActionListener{
         this.setVisible(true);
     }
 
+    /* (non-Javadoc)
+     * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+     */
     public void actionPerformed( ActionEvent evt ){
     }
+    /**
+     * @param args
+     */
     public static void main(String[] args){
         g = new Game();         
     }
