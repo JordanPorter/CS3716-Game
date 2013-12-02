@@ -36,6 +36,7 @@ public class Board extends JPanel implements MouseListener{
     Unit activeUnit = null;
     Unit newUnit = null;
     String[][] tilePos;
+    String[][] regionPos;
     ArrayList<Unit> units;
     LinkedList<Region> regions;
     
@@ -43,7 +44,6 @@ public class Board extends JPanel implements MouseListener{
     
     JMenuItem createCountry;
     JMenuItem addPlayer;
-    JMenuItem exitGame;
     
     File map;
     
@@ -61,7 +61,6 @@ public class Board extends JPanel implements MouseListener{
         addPlayer = new JMenuItem("Add Player");
         addPlayer.setMnemonic(KeyEvent.VK_A);
         addPlayer.addActionListener(new ActionListener()	{
-
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				String name = null;
@@ -76,25 +75,13 @@ public class Board extends JPanel implements MouseListener{
         	
         });
         
-        exitGame = new JMenuItem("Exit Game");
-        exitGame.setMnemonic(KeyEvent.VK_X);
-        exitGame.addActionListener(new ActionListener()	{
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				System.exit(0);
-			}
-        	
-        });
-        
-       actions = new JMenu("Actions");
-       actions.setMnemonic(KeyEvent.VK_A);
+        actions = new JMenu("Actions");
+        actions.setMnemonic(KeyEvent.VK_A);
                 
         createCountry = new JMenuItem("Create Country");
         createCountry.setMnemonic(KeyEvent.VK_C);
         createCountry.addActionListener(new ActionListener()	{
-        
-        @Override
+        	@Override
         	public void actionPerformed(ActionEvent arg0) {
         		for(Region r : regions)	{
         			if(r.citizens.contains(activeUnit))	{
@@ -102,25 +89,24 @@ public class Board extends JPanel implements MouseListener{
         				Election e = new Election(r.citizens);
         				r.isCountry = e.yay_nayVote();
         				System.out.println(r.name + " is Country: " + r.isCountry);
-        				}
         			}
         		}
-            });
+        	}
+        });
         actions.add(createCountry);
         
         g.menu.add(actions);
         
         g.file.add(addPlayer);
-        g.file.add(exitGame);
+        g.file.remove(g.exitGame);
         g.file.remove(g.newGame);
-        
+        g.file.add(g.exitGame);
     }
  
     
     
     
-    private void loadMap() throws IOException {
-		
+    private void loadMap() throws IOException {	
     	switch(this.map.getName())	{
     		case "Map4.map":
     			numPixels = 10;
@@ -150,6 +136,21 @@ public class Board extends JPanel implements MouseListener{
     		String[] line = new String[thisLine.size()];
     		tile.add(thisLine.toArray(line));
     	}
+    	
+    	file = new BufferedReader(new FileReader("./img/" + map.getName().substring(0, map.getName().length() - 4)));
+    	ArrayList<String[]> tileRegion = new ArrayList<String[]>();
+    	while((current=file.readLine())!=null){
+    		sc = new Scanner(current);
+    		sc.useDelimiter(",");
+    		ArrayList<String> thisLine = new ArrayList<String>();
+    		while(sc.hasNext()){
+    			thisLine.add(sc.next());
+    		}
+    		String[] line = new String[thisLine.size()];
+    		tileRegion.add(thisLine.toArray(line));
+    	}
+    	regionPos = new String[tileRegion.size()][tileRegion.get(0).length];
+    	regionPos = tileRegion.toArray(regionPos);
     	tilePos = new String[tile.size()][tile.get(0).length];
     	tilePos = tile.toArray(tilePos);
     	sc.close();
