@@ -37,6 +37,7 @@ public class Game extends JFrame implements ActionListener{
     public JMenuBar menu;
     public JMenu file;
     public JMenuItem newGame;
+    public JMenuItem exitGame;
     public JMenu help;
     public JMenuItem helpitem;
     
@@ -74,6 +75,17 @@ public class Game extends JFrame implements ActionListener{
 					e1.printStackTrace();
 				}
             }
+        });
+        
+        exitGame = new JMenuItem("Exit Game");
+        exitGame.setMnemonic(KeyEvent.VK_X);
+        exitGame.addActionListener(new ActionListener()	{
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				System.exit(0);
+			}
+        	
         });
         
         help = new JMenu("Help");
@@ -114,6 +126,7 @@ public class Game extends JFrame implements ActionListener{
         menu.add(help);
         help.add(helpitem);
         file.add(newGame);
+        file.add(exitGame);
         this.add(menu, BorderLayout.NORTH);
                 
         titlescreen = new JLabel(title);
