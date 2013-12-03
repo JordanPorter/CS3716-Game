@@ -53,6 +53,7 @@ public class Board extends JPanel implements MouseListener{
     	
     	setLayout(new BorderLayout());
     	loadMap();
+    	createRegions();
     	g.setSize(numPixels*tilePos[0].length,numPixels*tilePos.length+45);
         regions = new LinkedList<Region>();
         units = new ArrayList<Unit>();
@@ -103,7 +104,13 @@ public class Board extends JPanel implements MouseListener{
         g.file.add(g.exitGame);
     }
  
-    
+    public void createRegions(){
+    	for(int i = 0; i < regionPos[0].length; i++){
+    		for( int j = 0; j < regionPos.length; j++){
+    			
+    		}
+    	}
+    }
     
     
     private void loadMap() throws IOException {	
@@ -166,14 +173,12 @@ public class Board extends JPanel implements MouseListener{
         		g2d.drawImage(new Tile(tilePos[i][j]).getImage(), j*this.numPixels,i*this.numPixels, numPixels, numPixels, this);
         	}
         }
-        for(Region r : regions)	{
-        	
-        	g.setColor(r.color);
-        	g.drawRect(r.x*60, r.y*60, r.x + r.length*60-1, r.y + r.width*60-1);
-        	g.setColor(Color.WHITE);
-        	g.drawString(r.name, r.x*60 + r.length/2*60, r.y*60 + r.width/2*60);
+        for(int i=0; i<regionPos.length; i++){  
+        	for(int j=0; j<regionPos[i].length; j++){
+        		//g2d.setColor();
+        		g2d.drawRect(j*this.numPixels,i*this.numPixels, numPixels, numPixels);
+        	}
         }
-                
         for(Unit u : units){
         	if(u.equals(activeUnit))	{
         		g.setColor(Color.RED);
