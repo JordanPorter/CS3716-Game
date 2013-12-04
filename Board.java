@@ -156,7 +156,7 @@ public class Board extends JPanel implements MouseListener{
     			numPixels = 25;
     			break;
     		case "Map1.map":
-    			numPixels = 30;
+    			numPixels = 60;
     			break;
     	}
     	
