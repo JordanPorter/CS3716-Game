@@ -42,6 +42,7 @@ public class Election {
 			else if(c.getVotesFor() > winner.getVotesFor())
 				winner = c;
 		}
+		JOptionPane.showMessageDialog(null, "" + winner.u.playerName + " is now governor", "Governor", JOptionPane.INFORMATION_MESSAGE);
 		return winner.u;
 	}
 	
