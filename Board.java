@@ -88,11 +88,13 @@ public class Board extends JPanel implements MouseListener{
         	public void actionPerformed(ActionEvent arg0) {
         		for(Region r : regions)	{
         			if(r.citizens.contains(activeUnit))	{
-        				System.out.println("Taking Vote for Region: " + r.name + " With " + r.citizens.size() + " citizens");
-        				Election e = new Election();
-        				r.isCountry = e.yay_nayVote(r, r.citizens, activeUnit);
-        				System.out.println(r.name + " is Country: " + r.isCountry);
-        				repaint();
+        				if(!r.isCountry){
+        					System.out.println("Taking Vote for Region: " + r.name + " With " + r.citizens.size() + " citizens");
+        					Election e = new Election();
+        					r.isCountry = e.yay_nayVote(r, r.citizens, activeUnit);
+        					System.out.println(r.name + " is Country: " + r.isCountry);
+        					repaint();
+        				}
         			}
         		}
         	}

@@ -65,10 +65,13 @@ public class Election {
 		if(yayVotes.size() > nayVotes.size())	{
 			r.founderRow = initiator.row;
 			r.founderCol = initiator.col;
+			JOptionPane.showMessageDialog(null, "Majority vote achieved", "Country Created", JOptionPane.INFORMATION_MESSAGE);
 			return true;
 		}
-		else 
+		else {
+			JOptionPane.showMessageDialog(null, "Majority vote not achieved", "Country not created", JOptionPane.ERROR_MESSAGE);
 			return false;
+		}
 	}
 	
 }
