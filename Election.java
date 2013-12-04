@@ -16,15 +16,6 @@ public class Election {
 	
 	/**
 	 * @param candidates
-	 * @param citizens
-	 */
-	public Election(ArrayList<Unit> candidates, ArrayList<Unit> citizens)	{
-		this.candidates = candidates;
-		//this.citizens = citizens;
-	}
-	
-	/**
-	 * @param candidates
 	 */
 	public Election()	{
 	}
@@ -32,23 +23,26 @@ public class Election {
 	/**
 	 * @return
 	 */
-	public Unit electionVote() {
-//		Unit winner = null;
-//		String[] options = new String[candidates.size()];
-//		for(int i=0; i<options.length; i++)	{
-//			options[i] = candidates.get(i).playerName;
-//		}
-//		votes = new String[citizens.size()];
-//		for(int i=0; i<citizens.size(); i++)	{
-//			String thisVote = (String) JOptionPane.showInputDialog(null, "Select the name of your vote:", citizens.get(i).playerName + " Vote Now", JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
-//			for(Unit c : candidates)	{
-//				if(c.playerName.equalsIgnoreCase(thisVote))
-//					votes[i] = c.playerName;
-//			}
-//		}
-//		
-//		return winner;
-		return null;
+	public Unit electionVote(ArrayList<Candidate> candidates, ArrayList<Unit> citizens) {
+		Candidate winner = null;
+		String[] options = new String[candidates.size()];
+		for(int i=0; i<options.length; i++)	{
+			options[i] = candidates.get(i).u.playerName;
+		}
+		for(int i=0; i<citizens.size(); i++)	{
+			String thisVote = (String) JOptionPane.showInputDialog(null, "Select the name of your vote:", citizens.get(i).playerName + " Vote Now", JOptionPane.PLAIN_MESSAGE, null, options, options[0]);
+			for(Candidate c : candidates)	{
+				if(c.u.playerName.equalsIgnoreCase(thisVote))
+					c.votedFor();
+			}
+		}
+		for(Candidate c : candidates)	{
+			if(winner == null)
+				winner = c;
+			else if(c.getVotesFor() > winner.getVotesFor())
+				winner = c;
+		}
+		return winner.u;
 	}
 	
 	/**

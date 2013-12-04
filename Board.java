@@ -44,6 +44,7 @@ public class Board extends JPanel implements MouseListener{
     JMenu actions;
     
     JMenuItem createCountry;
+    JMenuItem holdElection;
     JMenuItem addPlayer;
     
     File map;
@@ -96,7 +97,38 @@ public class Board extends JPanel implements MouseListener{
         		}
         	}
         });
+        
+        holdElection = new JMenuItem("Hold Election");
+        holdElection.setMnemonic(KeyEvent.VK_C);
+        holdElection.addActionListener(new ActionListener()	{
+        	@Override
+        	public void actionPerformed(ActionEvent arg0) {
+        		for(Region r : regions)	{
+        			if(r.citizens.contains(activeUnit))	{
+        				if(!r.isCountry)	{
+        					JOptionPane.showMessageDialog(null, "Region Must Be A Country Before There Can Be An Election");
+        					break;
+        				}
+        				System.out.println("Collecting Candidates for Region: " + r.name + " With " + r.citizens.size() + " citizens");
+        				ArrayList<Candidate> candidates = new ArrayList<Candidate>();
+        				for(Unit u : r.citizens)	{
+        					int choice = JOptionPane.showConfirmDialog(null, "Would " + u.playerName + " Like To Be A Candidate In The Election (OK = Yes, Cancel = No)");
+        					if(choice == 0)
+        						candidates.add(new Candidate(u));
+        				}
+        				Election e = new Election();
+        				Unit governer = e.electionVote(candidates, r.citizens);
+        				r.ruler = governer;
+        				System.out.println(r.ruler.playerName + " Is The Governer Of " + r.name);
+        				repaint();
+        			}
+        		}
+        	}
+        });
+        
+        actions.add(holdElection);
         actions.add(createCountry);
+        
         
         g.menu.add(actions);
         
