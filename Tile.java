@@ -12,10 +12,13 @@ public class Tile {
 	String imageUrl = "Tile.png";
 	Image image;
 	
+	int row;
+	int col;
+	
 	/**
 	 * @param type
 	 */
-	public Tile(String type){
+	public Tile(String type, int row, int col){
 		this.type = type;
 		imageUrl = "/img/" + type + imageUrl; //concatenates ie. GTile.png, WTile.png, etc.
 		ImageIcon ii = new ImageIcon(this.getClass().getResource(imageUrl)); 

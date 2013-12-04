@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -9,12 +10,10 @@ import java.util.LinkedList;
  */
 public class Region	{
 	//upper left and lower right points for a region we are assuming that regions are rectangular or square for now.
-	int x;
-	int y;
-	int length;
-	int width;
 	
-	Color color;
+	
+	
+	Color color ;
 	
 	enum govt{DEMOCRACY,DICTATORSHIP,NONE}
 	govt gov;
@@ -22,6 +21,11 @@ public class Region	{
 	boolean isCountry = false;
 	
 	String name; 
+	
+	int founderRow;
+	int founderCol;
+	
+	int id;
 	
 	ArrayList<Unit> citizens; 
 	LinkedList<Unit> candidates; 
@@ -36,14 +40,11 @@ public class Region	{
 	 * @param width
 	 * @param color
 	 */
-	public Region(String name, int x, int y, int length, int width, Color color){
+	public Region(String name, Color color, int id){
 		this.name = name;
-		this.x = x;
-		this.y = y;
-		this.length = length;
-		this.width = width;
 		this.color = color;
 		this.gov = govt.NONE;
+		this.id = id;
 		citizens = new ArrayList<Unit>();
 	}
 	
@@ -75,6 +76,12 @@ public class Region	{
 		return this.name;
 	}
 	
+	public void drawName(Graphics2D g, int numPixels)	{
+		if(this.isCountry)	{
+			g.drawString("District " + this.name, (founderCol*numPixels)+numPixels/2+numPixels/4, (founderRow*numPixels)+numPixels/2+numPixels/2);
+		}
+	}
+	
 	/**
 	 * @param unit
 	 */
@@ -91,19 +98,24 @@ public class Region	{
 
 	/**
 	 * @param units
+	 * @param regions 
 	 */
-	public void trackCitizens(LinkedList<Unit> units)	{
+	public void trackCitizens(ArrayList<Unit> units, String[][] regionPos, ArrayList<Region> regions)	{
 		for(Unit u : units)	{
-			if(u.getX() >= this.x*60 && u.getX() <= (this.x+length-1)*60)	{
-				if(u.getY() >= this.y*60 && u.getY() <= (this.y+length-2)*60)	{
-					if(!citizens.contains(u))	
-						citizens.add(u);
+			int row = u.row;
+			int col = u.col;
+			if(regions.get(Integer.parseInt(regionPos[row][col])-1).id == this.id)	{
+				if(!citizens.contains(u))	{
+					System.out.println("Citizen " + u.playerName + " entered " + this.name);
+					citizens.add(u);
 				}
-				else
-					citizens.remove(u);
 			}
-			else
-				citizens.remove(u);
+			else	{
+				if(citizens.contains(u))	{
+					citizens.remove(u);
+					System.out.println("Citizen " + u.playerName + " left " + this.name);
+				}
+			}
 		}
 	}	
 }
